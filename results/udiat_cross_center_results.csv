@@ -1,0 +1,8 @@
+model_name,regime,target_dataset,model_size_mb,test_dsc_mean,test_dsc_median,test_hd95_mean_px,test_hd95_median_px
+ResNet-34 FP32 (BUSI),Zero-Shot,UDIAT Dataset B,93.22,0.7902,0.8748,17.03,6.61
+ResNet-34 INT8 (BUSI),Zero-Shot,UDIAT Dataset B,23.59,0.7928,0.8746,16.66,6.52
+MobileNetV3-Small FP32 (BUSI),Zero-Shot,UDIAT Dataset B,8.23,0.7244,0.8278,33.73,18.81
+MobileNetV3 v1 (Naive INT8 / Harsh) [BUSI],Zero-Shot,UDIAT Dataset B,2.43,0.1519,0.1248,148.71,145.13
+MobileNetV3 v2 (Rescued Mixed k=13) [BUSI],Zero-Shot,UDIAT Dataset B,2.5,0.7002,0.8562,31.36,16.04
+ResNet-34 FP32 (UDIAT Fine-Tuned),Fine-Tuned,UDIAT Dataset B,93.21,0.8249,0.9081,22.09,5.92
+ResNet-34 INT8 (UDIAT Fine-Tuned),Fine-Tuned,UDIAT Dataset B,23.59,0.8283,0.9067,21.51,5.92

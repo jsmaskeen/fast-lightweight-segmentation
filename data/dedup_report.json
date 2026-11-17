@@ -1,0 +1,328 @@
+{
+  "raw_counts": {
+    "benign": 437,
+    "malignant": 210,
+    "normal": 133,
+    "total_lesion": 647,
+    "total": 780
+  },
+  "dropped_duplicates": [
+    "malignant (94)",
+    "malignant (145)",
+    "malignant (51)",
+    "malignant (52)"
+  ],
+  "clean_counts": {
+    "benign": 437,
+    "malignant": 206,
+    "normal": 133,
+    "total_lesion": 643,
+    "total": 776
+  },
+  "num_clusters": 686,
+  "multi_scan_clusters": {
+    "cluster_benign_253": [
+      "benign (10)",
+      "benign (327)"
+    ],
+    "cluster_benign_255": [
+      "benign (12)",
+      "benign (329)"
+    ],
+    "cluster_benign_300": [
+      "benign (127)",
+      "benign (37)"
+    ],
+    "cluster_benign_376": [
+      "benign (129)",
+      "benign (44)"
+    ],
+    "cluster_benign_257": [
+      "benign (13)",
+      "benign (330)"
+    ],
+    "cluster_benign_391": [
+      "benign (135)",
+      "benign (58)"
+    ],
+    "cluster_benign_383": [
+      "benign (136)",
+      "benign (50)"
+    ],
+    "cluster_benign_394": [
+      "benign (138)",
+      "benign (60)"
+    ],
+    "cluster_benign_436": [
+      "benign (139)",
+      "benign (157)",
+      "benign (65)",
+      "benign (99)"
+    ],
+    "cluster_benign_89": [
+      "benign (152)",
+      "benign (18)"
+    ],
+    "cluster_benign_422": [
+      "benign (163)",
+      "benign (86)"
+    ],
+    "cluster_benign_421": [
+      "benign (164)",
+      "benign (85)"
+    ],
+    "cluster_benign_362": [
+      "benign (17)",
+      "benign (425)"
+    ],
+    "cluster_benign_278": [
+      "benign (177)",
+      "benign (35)"
+    ],
+    "cluster_benign_212": [
+      "benign (200)",
+      "benign (274)",
+      "benign (290)"
+    ],
+    "cluster_benign_226": [
+      "benign (201)",
+      "benign (302)"
+    ],
+    "cluster_benign_210": [
+      "benign (203)",
+      "benign (273)",
+      "benign (289)"
+    ],
+    "cluster_benign_166": [
+      "benign (204)",
+      "benign (249)"
+    ],
+    "cluster_benign_227": [
+      "benign (206)",
+      "benign (303)"
+    ],
+    "cluster_benign_213": [
+      "benign (208)",
+      "benign (291)"
+    ],
+    "cluster_benign_219": [
+      "benign (209)",
+      "benign (275)",
+      "benign (297)"
+    ],
+    "cluster_benign_190": [
+      "benign (215)",
+      "benign (270)"
+    ],
+    "cluster_benign_187": [
+      "benign (217)",
+      "benign (268)"
+    ],
+    "cluster_benign_218": [
+      "benign (218)",
+      "benign (296)"
+    ],
+    "cluster_benign_191": [
+      "benign (220)",
+      "benign (271)"
+    ],
+    "cluster_benign_214": [
+      "benign (225)",
+      "benign (292)"
+    ],
+    "cluster_benign_198": [
+      "benign (226)",
+      "benign (263)",
+      "benign (278)"
+    ],
+    "cluster_benign_168": [
+      "benign (227)",
+      "benign (250)"
+    ],
+    "cluster_benign_201": [
+      "benign (229)",
+      "benign (259)",
+      "benign (280)"
+    ],
+    "cluster_benign_170": [
+      "benign (230)",
+      "benign (252)"
+    ],
+    "cluster_benign_217": [
+      "benign (231)",
+      "benign (295)"
+    ],
+    "cluster_benign_208": [
+      "benign (232)",
+      "benign (276)",
+      "benign (287)"
+    ],
+    "cluster_benign_221": [
+      "benign (233)",
+      "benign (299)"
+    ],
+    "cluster_benign_180": [
+      "benign (234)",
+      "benign (261)"
+    ],
+    "cluster_benign_224": [
+      "benign (238)",
+      "benign (300)"
+    ],
+    "cluster_benign_199": [
+      "benign (241)",
+      "benign (266)",
+      "benign (279)"
+    ],
+    "cluster_benign_229": [
+      "benign (245)",
+      "benign (305)"
+    ],
+    "cluster_benign_197": [
+      "benign (255)",
+      "benign (277)"
+    ],
+    "cluster_benign_246": [
+      "benign (3)",
+      "benign (320)"
+    ],
+    "cluster_benign_359": [
+      "benign (309)",
+      "benign (422)"
+    ],
+    "cluster_benign_360": [
+      "benign (310)",
+      "benign (423)"
+    ],
+    "cluster_benign_363": [
+      "benign (316)",
+      "benign (426)"
+    ],
+    "cluster_benign_333": [
+      "benign (321)",
+      "benign (4)"
+    ],
+    "cluster_benign_382": [
+      "benign (322)",
+      "benign (5)"
+    ],
+    "cluster_benign_393": [
+      "benign (323)",
+      "benign (6)"
+    ],
+    "cluster_benign_415": [
+      "benign (325)",
+      "benign (8)"
+    ],
+    "cluster_benign_426": [
+      "benign (326)",
+      "benign (9)"
+    ],
+    "cluster_benign_347": [
+      "benign (395)",
+      "benign (411)"
+    ],
+    "cluster_benign_348": [
+      "benign (400)",
+      "benign (412)"
+    ],
+    "cluster_malignant_452": [
+      "malignant (10)",
+      "malignant (112)"
+    ],
+    "cluster_malignant_492": [
+      "malignant (111)",
+      "malignant (15)"
+    ],
+    "cluster_malignant_482": [
+      "malignant (123)",
+      "malignant (14)"
+    ],
+    "cluster_malignant_631": [
+      "malignant (17)",
+      "malignant (88)"
+    ],
+    "cluster_malignant_583": [
+      "malignant (39)",
+      "malignant (42)"
+    ],
+    "cluster_malignant_622": [
+      "malignant (7)",
+      "malignant (8)"
+    ],
+    "cluster_malignant_640": [
+      "malignant (96)",
+      "malignant (97)"
+    ],
+    "cluster_normal_694": [
+      "normal (122)",
+      "normal (25)"
+    ],
+    "cluster_normal_696": [
+      "normal (124)",
+      "normal (27)"
+    ],
+    "cluster_normal_691": [
+      "normal (125)",
+      "normal (22)"
+    ],
+    "cluster_normal_705": [
+      "normal (129)",
+      "normal (35)"
+    ],
+    "cluster_normal_721": [
+      "normal (13)",
+      "normal (5)"
+    ],
+    "cluster_normal_695": [
+      "normal (130)",
+      "normal (26)"
+    ],
+    "cluster_normal_687": [
+      "normal (131)",
+      "normal (19)"
+    ],
+    "cluster_normal_737": [
+      "normal (21)",
+      "normal (63)",
+      "normal (64)"
+    ],
+    "cluster_normal_728": [
+      "normal (39)",
+      "normal (48)",
+      "normal (56)"
+    ],
+    "cluster_normal_731": [
+      "normal (40)",
+      "normal (46)",
+      "normal (59)"
+    ],
+    "cluster_normal_734": [
+      "normal (41)",
+      "normal (44)",
+      "normal (47)",
+      "normal (61)"
+    ],
+    "cluster_normal_735": [
+      "normal (42)",
+      "normal (45)",
+      "normal (49)",
+      "normal (62)"
+    ],
+    "cluster_normal_741": [
+      "normal (55)",
+      "normal (57)",
+      "normal (67)",
+      "normal (68)"
+    ],
+    "cluster_normal_742": [
+      "normal (58)",
+      "normal (60)",
+      "normal (69)"
+    ],
+    "cluster_normal_774": [
+      "normal (97)",
+      "normal (98)"
+    ]
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "r34": {
+    "metadata": {
+      "model": "r34",
+      "variant": "fp32",
+      "git_commit": "1de1f0d",
+      "ort_version": "1.31.1",
+      "hardware_id": "Windows_AMD64_AMD64 Family 25 Model 116 Stepping 1, AuthenticAMD",
+      "timestamp": "2026-11-13T15:26:48.315323+00:00"
+    },
+    "n_lesion_test": 96,
+    "n_normal_test": 67,
+    "empty_predictions_count": 1,
+    "dsc": {
+      "mean": 0.8011389065023229,
+      "median": 0.9032924374002885,
+      "ci_lower": 0.7534687954120244,
+      "ci_upper": 0.8457406541545754,
+      "median_ci_lower": 0.8695059216241658,
+      "median_ci_upper": 0.9147977347625278,
+      "n_samples": 96
+    },
+    "iou": {
+      "mean": 0.7187846478932594,
+      "median": 0.8236418309388573,
+      "ci_lower": 0.6675166421799887,
+      "ci_upper": 0.7662819952575792,
+      "median_ci_lower": 0.769141608721383,
+      "median_ci_upper": 0.842985119047619,
+      "n_samples": 96
+    },
+    "hd95": {
+      "mean": 27.6865221541085,
+      "median": 9.609772228646444,
+      "ci_lower": 19.307677721563465,
+      "ci_upper": 38.2331920748171,
+      "median_ci_lower": 6.41547594742265,
+      "median_ci_upper": 12.649110640673518,
+      "n_samples": 96
+    },
+    "normal_fpr_50px": 0.7910447761194029,
+    "normal_fpr_0px": 0.8059701492537313
+  },
+  "mbv3s": {
+    "metadata": {
+      "model": "mbv3s",
+      "variant": "fp32",
+      "git_commit": "1de1f0d",
+      "ort_version": "1.31.1",
+      "hardware_id": "Windows_AMD64_AMD64 Family 25 Model 116 Stepping 1, AuthenticAMD",
+      "timestamp": "2026-11-13T15:26:53.643794+00:00"
+    },
+    "n_lesion_test": 96,
+    "n_normal_test": 67,
+    "empty_predictions_count": 2,
+    "dsc": {
+      "mean": 0.7661524053109812,
+      "median": 0.8730013479476879,
+      "ci_lower": 0.7126074299832013,
+      "ci_upper": 0.816421792660096,
+      "median_ci_lower": 0.8476744186046512,
+      "median_ci_upper": 0.9021298899318626,
+      "n_samples": 96
+    },
+    "iou": {
+      "mean": 0.6772339828297923,
+      "median": 0.7746261229155028,
+      "ci_lower": 0.6227759242028514,
+      "ci_upper": 0.7280892834306045,
+      "median_ci_lower": 0.7356205852674067,
+      "median_ci_upper": 0.8217109424414928,
+      "n_samples": 96
+    },
+    "hd95": {
+      "mean": 35.09244285601146,
+      "median": 13.682459817028663,
+      "ci_lower": 24.971986066342215,
+      "ci_upper": 47.17998005398857,
+      "median_ci_lower": 9.534201129544496,
+      "median_ci_upper": 18.55995294920818,
+      "n_samples": 96
+    },
+    "normal_fpr_50px": 0.8805970149253731,
+    "normal_fpr_0px": 0.8955223880597015
+  }
+}

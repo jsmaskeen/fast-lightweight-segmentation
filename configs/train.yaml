@@ -1,0 +1,28 @@
+seed: 42
+image_size: [256, 256]
+batch_size: 48
+num_workers: 4
+epochs: 100
+patience: 15 # Early stopping on val Dice
+learning_rate: 3.0e-4
+weight_decay: 1.0e-4
+min_learning_rate: 1.0e-6
+
+loss:
+  bce_weight: 0.5
+  dice_weight: 0.5
+
+augmentations:
+  horizontal_flip_prob: 0.5
+  affine:
+    scale: [0.9, 1.1]
+    rotate: [-15, 15]
+    translate_percent: [-0.05, 0.05]
+    prob: 0.5
+  color_jitter:
+    brightness: 0.2
+    contrast: 0.2
+    prob: 0.5
+  gaussian_noise:
+    var_limit: [10.0, 50.0]
+    prob: 0.3

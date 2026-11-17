@@ -1,0 +1,254 @@
+{
+  "model": "mbv3s",
+  "k_star": 13,
+  "total_quantizable_nodes": 63,
+  "contingency_invoked": false,
+  "fp32_val": {
+    "dsc": 0.7593070380580599,
+    "size_mb": 8.232552528381348,
+    "latency_ms": 20.05185
+  },
+  "k_sweep": [
+    {
+      "k": 0,
+      "excluded_nodes": [],
+      "val_dsc": 0.5350699693665443,
+      "val_hd95": 66.60338200663281,
+      "val_fpr_50px": 0.696969696969697,
+      "size_mb": 2.393538475036621,
+      "p50_latency_ms": 27.2332,
+      "model_path": "models\\mixed\\mbv3s_mix_k0.onnx",
+      "recovery_ratio": 0.0
+    },
+    {
+      "k": 1,
+      "excluded_nodes": [
+        "/segmentation_head/segmentation_head.0/Conv"
+      ],
+      "val_dsc": 0.536365283292225,
+      "val_hd95": 67.37711559878362,
+      "val_fpr_50px": 0.7121212121212122,
+      "size_mb": 2.392214775085449,
+      "p50_latency_ms": 26.77715,
+      "model_path": "models\\mixed\\mbv3s_mix_k1.onnx",
+      "recovery_ratio": 0.0057765378991048565
+    },
+    {
+      "k": 2,
+      "excluded_nodes": [
+        "/segmentation_head/segmentation_head.0/Conv",
+        "/encoder/model/blocks.4/blocks.4.1/conv_dw/Conv"
+      ],
+      "val_dsc": 0.5313948295741213,
+      "val_hd95": 63.41635910820922,
+      "val_fpr_50px": 0.696969696969697,
+      "size_mb": 2.423884391784668,
+      "p50_latency_ms": 23.2392,
+      "model_path": "models\\mixed\\mbv3s_mix_k2.onnx",
+      "recovery_ratio": -0.016389528341002657
+    },
+    {
+      "k": 3,
+      "excluded_nodes": [
+        "/segmentation_head/segmentation_head.0/Conv",
+        "/encoder/model/blocks.4/blocks.4.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.1/conv_dw/Conv"
+      ],
+      "val_dsc": 0.5497094838440602,
+      "val_hd95": 53.27827320122932,
+      "val_fpr_50px": 0.6666666666666666,
+      "size_mb": 2.4356870651245117,
+      "p50_latency_ms": 22.9777,
+      "model_path": "models\\mixed\\mbv3s_mix_k3.onnx",
+      "recovery_ratio": 0.06528588053233765
+    },
+    {
+      "k": 4,
+      "excluded_nodes": [
+        "/segmentation_head/segmentation_head.0/Conv",
+        "/encoder/model/blocks.4/blocks.4.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.2/conv_dw/Conv"
+      ],
+      "val_dsc": 0.5586286451485535,
+      "val_hd95": 62.930669663500154,
+      "val_fpr_50px": 0.6666666666666666,
+      "size_mb": 2.4474897384643555,
+      "p50_latency_ms": 27.6341,
+      "model_path": "models\\mixed\\mbv3s_mix_k4.onnx",
+      "recovery_ratio": 0.10506146873699564
+    },
+    {
+      "k": 5,
+      "excluded_nodes": [
+        "/segmentation_head/segmentation_head.0/Conv",
+        "/encoder/model/blocks.4/blocks.4.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.2/conv_dw/Conv",
+        "/encoder/model/blocks.4/blocks.4.0/conv_dw/Conv"
+      ],
+      "val_dsc": 0.5157937782086863,
+      "val_hd95": 69.86726581165075,
+      "val_fpr_50px": 0.5151515151515151,
+      "size_mb": 2.462130546569824,
+      "p50_latency_ms": 27.87655,
+      "model_path": "models\\mixed\\mbv3s_mix_k5.onnx",
+      "recovery_ratio": -0.08596344605439134
+    },
+    {
+      "k": 6,
+      "excluded_nodes": [
+        "/segmentation_head/segmentation_head.0/Conv",
+        "/encoder/model/blocks.4/blocks.4.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.2/conv_dw/Conv",
+        "/encoder/model/blocks.4/blocks.4.0/conv_dw/Conv",
+        "/encoder/model/blocks.3/blocks.3.1/conv_dw/Conv"
+      ],
+      "val_dsc": 0.5149272027768651,
+      "val_hd95": 71.34404240496363,
+      "val_fpr_50px": 0.5151515151515151,
+      "size_mb": 2.468255043029785,
+      "p50_latency_ms": 27.0325,
+      "model_path": "models\\mixed\\mbv3s_mix_k6.onnx",
+      "recovery_ratio": -0.08982799635768388
+    },
+    {
+      "k": 8,
+      "excluded_nodes": [
+        "/segmentation_head/segmentation_head.0/Conv",
+        "/encoder/model/blocks.4/blocks.4.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.2/conv_dw/Conv",
+        "/encoder/model/blocks.4/blocks.4.0/conv_dw/Conv",
+        "/encoder/model/blocks.3/blocks.3.1/conv_dw/Conv",
+        "/encoder/model/blocks.4/blocks.4.2/conv_dw/Conv",
+        "/encoder/model/blocks.3/blocks.3.0/conv_dw/Conv"
+      ],
+      "val_dsc": 0.5412321782756386,
+      "val_hd95": 70.15213781104721,
+      "val_fpr_50px": 0.5303030303030303,
+      "size_mb": 2.5046348571777344,
+      "p50_latency_ms": 27.83535,
+      "model_path": "models\\mixed\\mbv3s_mix_k8.onnx",
+      "recovery_ratio": 0.02748077713043845
+    },
+    {
+      "k": 10,
+      "excluded_nodes": [
+        "/segmentation_head/segmentation_head.0/Conv",
+        "/encoder/model/blocks.4/blocks.4.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.2/conv_dw/Conv",
+        "/encoder/model/blocks.4/blocks.4.0/conv_dw/Conv",
+        "/encoder/model/blocks.3/blocks.3.1/conv_dw/Conv",
+        "/encoder/model/blocks.4/blocks.4.2/conv_dw/Conv",
+        "/encoder/model/blocks.3/blocks.3.0/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.0/conv_dw/Conv",
+        "/encoder/model/conv_stem/Conv"
+      ],
+      "val_dsc": 0.49959551637898614,
+      "val_hd95": 82.67997295737487,
+      "val_fpr_50px": 0.4393939393939394,
+      "size_mb": 2.507430076599121,
+      "p50_latency_ms": 26.6012,
+      "model_path": "models\\mixed\\mbv3s_mix_k10.onnx",
+      "recovery_ratio": -0.15820066322914955
+    },
+    {
+      "k": 12,
+      "excluded_nodes": [
+        "/segmentation_head/segmentation_head.0/Conv",
+        "/encoder/model/blocks.4/blocks.4.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.2/conv_dw/Conv",
+        "/encoder/model/blocks.4/blocks.4.0/conv_dw/Conv",
+        "/encoder/model/blocks.3/blocks.3.1/conv_dw/Conv",
+        "/encoder/model/blocks.4/blocks.4.2/conv_dw/Conv",
+        "/encoder/model/blocks.3/blocks.3.0/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.0/conv_dw/Conv",
+        "/encoder/model/conv_stem/Conv",
+        "/encoder/model/blocks.1/blocks.1.0/conv_dw/Conv",
+        "/encoder/model/blocks.1/blocks.1.1/conv_dw/Conv"
+      ],
+      "val_dsc": 0.5070680381861737,
+      "val_hd95": 68.83331680541113,
+      "val_fpr_50px": 0.42424242424242425,
+      "size_mb": 2.504958152770996,
+      "p50_latency_ms": 27.17535,
+      "model_path": "models\\mixed\\mbv3s_mix_k12.onnx",
+      "recovery_ratio": -0.12487645929270048
+    },
+    {
+      "k": 13,
+      "excluded_nodes": [
+        "/segmentation_head/segmentation_head.0/Conv",
+        "/encoder/model/blocks.4/blocks.4.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.1/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.2/conv_dw/Conv",
+        "/encoder/model/blocks.4/blocks.4.0/conv_dw/Conv",
+        "/encoder/model/blocks.3/blocks.3.1/conv_dw/Conv",
+        "/encoder/model/blocks.4/blocks.4.2/conv_dw/Conv",
+        "/encoder/model/blocks.3/blocks.3.0/conv_dw/Conv",
+        "/encoder/model/blocks.2/blocks.2.0/conv_dw/Conv",
+        "/encoder/model/conv_stem/Conv",
+        "/encoder/model/blocks.1/blocks.1.0/conv_dw/Conv",
+        "/encoder/model/blocks.1/blocks.1.1/conv_dw/Conv",
+        "/encoder/model/blocks.0/blocks.0.0/conv_dw/Conv"
+      ],
+      "val_dsc": 0.6958989986031389,
+      "val_hd95": 35.75720699602182,
+      "val_fpr_50px": 0.7878787878787878,
+      "size_mb": 2.503056526184082,
+      "p50_latency_ms": 27.787950000000002,
+      "model_path": "models\\mixed\\mbv3s_mix_k13.onnx",
+      "recovery_ratio": 0.7172276652342799
+    }
+  ],
+  "baselines": {
+    "first_last_heuristic": {
+      "excluded": [
+        "/encoder/model/conv_stem/Conv",
+        "/segmentation_head/segmentation_head.0/Conv"
+      ],
+      "val_dsc": 0.5015583380290366,
+      "val_hd95": 72.42290382345259
+    },
+    "random_k": {
+      "k": 13,
+      "seeds": [
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "val_dsc_mean": 0.5613501058613096,
+      "val_dsc_min": 0.4625896023906951,
+      "val_dsc_max": 0.6837563228966276
+    }
+  },
+  "k_star_test_results": {
+    "model_path": "models\\mixed\\mbv3s_mix_k13.onnx",
+    "dsc": {
+      "mean": 0.7263180985613981,
+      "median": 0.8448414883184117,
+      "ci_lower": 0.6690035399273159,
+      "ci_upper": 0.778416665767849,
+      "median_ci_lower": 0.791532599491956,
+      "median_ci_upper": 0.8878360565878487,
+      "n_samples": 96
+    },
+    "hd95": {
+      "mean": 35.198046991278346,
+      "median": 18.34865348076236,
+      "ci_lower": 27.35663876750677,
+      "ci_upper": 43.27164718977605,
+      "median_ci_lower": 11.896017362830756,
+      "median_ci_upper": 25.647979675263116,
+      "n_samples": 96
+    },
+    "normal_fpr_50px": 0.8059701492537313,
+    "empty_predictions": 0
+  }
+}

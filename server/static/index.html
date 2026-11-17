@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BUSI POCUS Edge Tumor Segmentation | WebGPU & WebAssembly</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- ONNX Runtime Web library (bundled local script with CDN fallback) -->
+  <script src="js/ort.all.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07" stroke-opacity="0.3"/>
+            <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2.5"/>
+            <circle cx="12" cy="12" r="3" fill="#00f0ff"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="app-title">BUSI POCUS Tumor Vision</h1>
+          <p class="app-subtitle">Real-Time In-Browser Segmentation | Smallest Distil-Quantized Model (2.50 MB)</p>
+        </div>
+      </div>
+      
+      <div class="header-right">
+        <div class="status-badge" id="backendBadge">
+          <span class="status-dot"></span>
+          <span id="backendText">Initializing WebGPU / WASM...</span>
+        </div>
+        <div class="status-badge badge-model" id="modelBadge">
+          <span class="icon">&#9881;</span>
+          <span id="modelText">mbv3s Distilled INT8 (2.5 MB)</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <div class="workspace-grid">
+      <!-- Left Controls Sidebar -->
+      <aside class="sidebar">
+        <!-- Section: Hardware Acceleration & Model -->
+        <div class="card">
+          <div class="card-title">Engine Configuration</div>
+          <div class="form-group">
+            <label for="modelSelect">Neural Model:</label>
+            <select id="modelSelect" class="select-input">
+              <option value="models/mbv3s_mixed_best.onnx" selected>
+                MobileNetV3-Small Rescued Mixed (2.50 MB, 0.726 DSC - Edge Optimal)
+              </option>
+              <option value="models/mbv3s_distilled.onnx">
+                MobileNetV3-Small Distilled FP32 (8.23 MB, 0.803 DSC - Teacher Parity)
+              </option>
+              <option value="models/mbv3s_distilled_int8_minmax.onnx">
+                MobileNetV3-Small Distilled INT8 (2.50 MB - Baseline INT8)
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="epSelect">Execution Provider:</label>
+            <select id="epSelect" class="select-input">
+              <option value="auto" selected>Auto (WebGPU &rarr; WASM Fallback)</option>
+              <option value="webgpu">WebGPU (Hardware GPU Accelerated)</option>
+              <option value="wasm">WebAssembly (WASM SIMD Multi-Thread)</option>
+            </select>
+          </div>
+
+          <button id="reloadModelBtn" class="btn btn-secondary">
+            <span>&#8635;</span> Re-initialize Engine
+          </button>
+        </div>
+
+        <!-- Section: Upload & Sample B-Mode Scans -->
+        <div class="card">
+          <div class="card-title">B-Mode Scan Input</div>
+          <div class="drop-zone" id="dropZone">
+            <input type="file" id="fileInput" accept="image/*" class="file-input">
+            <div class="drop-zone-content">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+              </svg>
+              <p><strong>Click to browse</strong> or drag &amp; drop B-Mode frame</p>
+              <span class="subtext">Supports PNG, JPG, BMP ultrasound frames</span>
+            </div>
+          </div>
+
+          <div class="samples-container">
+            <div class="samples-title">Clinical Sample Presets:</div>
+            <div class="samples-grid">
+              <button class="sample-btn" data-url="samples/benign_sample1.png">Benign Lesion 1</button>
+              <button class="sample-btn" data-url="samples/benign_sample2.png">Benign Lesion 2</button>
+              <button class="sample-btn" data-url="samples/malignant_sample1.png">Malignant 1</button>
+              <button class="sample-btn" data-url="samples/malignant_sample2.png">Malignant 2</button>
+              <button class="sample-btn" data-url="samples/normal_sample1.png">Normal (No Tumor)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Tumor Overlay Tuning -->
+        <div class="card">
+          <div class="card-title">Tumor Overlay Controls</div>
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="threshSlider">Probability Threshold:</label>
+              <span class="slider-val" id="threshVal">0.50</span>
+            </div>
+            <input type="range" id="threshSlider" min="0.05" max="0.95" step="0.01" value="0.50" class="range-slider">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="opacitySlider">Overlay Opacity:</label>
+              <span class="slider-val" id="opacityVal">65%</span>
+            </div>
+            <input type="range" id="opacitySlider" min="0.10" max="1.00" step="0.05" value="0.65" class="range-slider">
+          </div>
+
+          <div class="form-group">
+            <label>Overlay Palette:</label>
+            <div class="color-palette">
+              <button class="color-dot active" data-color="rgba(0, 240, 255, " style="background:#00f0ff;" title="Electric Cyan"></button>
+              <button class="color-dot" data-color="rgba(255, 45, 85, " style="background:#ff2d55;" title="Clinical Crimson"></button>
+              <button class="color-dot" data-color="rgba(0, 255, 128, " style="background:#00ff80;" title="Fluorescent Green"></button>
+              <button class="color-dot" data-color="rgba(255, 179, 0, " style="background:#ffb300;" title="Thermal Amber"></button>
+            </div>
+          </div>
+
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="contourCheck" checked>
+              <span>Draw Boundary Contour</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="bboxCheck" checked>
+              <span>Draw Bounding Box</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="centroidCheck" checked>
+              <span>Show Centroid (+)</span>
+            </label>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center & Right: Canvas Viewports & Telemetry -->
+      <main class="main-content">
+        <!-- Viewport Controls & Tabs -->
+        <div class="viewport-toolbar">
+          <div class="tab-group">
+            <button class="tab-btn active" data-view="composite">Composite Overlay</button>
+            <button class="tab-btn" data-view="sidebyside">Side-by-Side</button>
+            <button class="tab-btn" data-view="heatmap">Probability Heatmap</button>
+            <button class="tab-btn" data-view="binary">Binary Mask</button>
+          </div>
+          <div class="viewport-meta" id="imageDim">No frame loaded</div>
+        </div>
+
+        <!-- Canvas Container -->
+        <div class="canvas-viewport" id="viewport">
+          <!-- Main Output Canvas -->
+          <canvas id="outputCanvas" width="512" height="512"></canvas>
+          
+          <!-- Secondary Canvas for Side-by-Side -->
+          <canvas id="secondaryCanvas" width="512" height="512" style="display: none;"></canvas>
+
+          <!-- Loading Spinner Overlay -->
+          <div class="spinner-overlay" id="spinnerOverlay">
+            <div class="spinner"></div>
+            <p id="spinnerText">Running WebGPU / WASM Inference...</p>
+          </div>
+        </div>
+
+        <!-- Clinical Telemetry HUD -->
+        <div class="telemetry-grid">
+          <!-- Card: Diagnostic Verdict -->
+          <div class="telemetry-card" id="verdictCard">
+            <div class="t-label">Diagnostic Finding</div>
+            <div class="t-value" id="verdictValue">Awaiting Scan</div>
+            <div class="t-sub" id="verdictSub">Upload ultrasound image</div>
+          </div>
+
+          <!-- Card: Lesion Metrics -->
+          <div class="telemetry-card">
+            <div class="t-label">Tumor Area / Size</div>
+            <div class="t-value" id="areaValue">0 px²</div>
+            <div class="t-sub" id="areaPct">0.0% of frame</div>
+          </div>
+
+          <!-- Card: Coordinates -->
+          <div class="telemetry-card">
+            <div class="t-label">Tumor Centroid &amp; Box</div>
+            <div class="t-value" id="coordsValue">&mdash;</div>
+            <div class="t-sub" id="boxValue">W: 0 px | H: 0 px</div>
+          </div>
+
+          <!-- Card: Edge Latency Benchmark -->
+          <div class="telemetry-card highlight">
+            <div class="t-label">Latency / Throughput</div>
+            <div class="t-value" id="latencyValue">0.0 ms</div>
+            <div class="t-sub" id="fpsValue">0.0 FPS (0.0 ms inference)</div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

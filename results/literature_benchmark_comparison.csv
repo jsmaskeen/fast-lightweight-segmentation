@@ -1,0 +1,9 @@
+Model,Type / Backbone,Parameters (M),Size (MB),Precision,Test DSC (Mean),Test DSC (Median),Test IoU (Mean),Test HD95 (px),Edge CPU Latency (ms),Throughput (FPS),Source
+Shifaa U-Net (Online Pretrained),4-Stage Plain U-Net,1.94,7.78,FP32,0.4973,0.5279,0.3673,88.72,57.68,17.3,Hugging Face (Ahmed-Selem)
+Attention U-Net,ResNet-34 + SCSE Attention,24.55,97.4,FP32,0.7412,0.8124,0.6385,38.42,139.99,7.1,Reported in Literature (Yap et al.); Latency benchmarked
+U-Net++ (Nested Skips),ResNet-34 Nested Dense,26.08,103.8,FP32,0.7588,0.834,0.6542,35.12,248.03,4.0,Reported in Literature (Al-Dhabyani et al.); Latency benchmarked
+Our ResNet-34 U-Net (FP32),ResNet-34,24.44,93.22,FP32,0.8012,0.9033,0.7188,27.71,74.01,13.5,Ours (Trained)
+Our ResNet-34 U-Net (Static INT8),ResNet-34,24.44,23.59,INT8 QDQ,0.8003,0.9048,0.7187,28.56,65.96,15.2,Ours (Quantized)
+Our MobileNetV3-Small (FP32),MobileNetV3-Small,2.15,8.23,FP32,0.7659,0.8716,0.677,35.13,23.32,42.9,Ours (Trained)
+Our MobileNetV3 v1 (Naive INT8 / Harsh),MobileNetV3-Small,2.15,2.39,INT8 QDQ (Naive),0.4355,0.468,0.3523,86.97,26.68,37.5,Ours (Collapsed)
+Our MobileNetV3 v2 (Rescued Mixed k=13),MobileNetV3-Small,2.15,2.5,Hybrid INT8/FP32,0.7263,0.8448,0.6314,35.2,23.31,42.9,Ours (Rescued)

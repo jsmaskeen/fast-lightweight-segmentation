@@ -1,0 +1,23 @@
+opset_version: 17
+input_shape: [1, 3, 256, 256]
+
+calibration:
+  num_images: 100
+  seed: 42
+  split: "train"
+
+quant_format: "QDQ"
+per_channel: true
+
+# S8S8 default for ARM64 RPi4 (QInt8 activations + QInt8 weights)
+activation_type: "QInt8"
+weight_type: "QInt8"
+
+methods:
+  - "minmax"
+  - "entropy"
+
+extA:
+  intermediate_calib_samples: 24
+  k_grid: [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 13]
+  recovery_threshold: 0.90

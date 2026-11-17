@@ -1,0 +1,4 @@
+Model,Variant,Split,Mean Dice,Dice 95% CI,Mean HD95 (px),HD95 95% CI,Normal FPR@50px,Empty Preds
+mbv3s,fp32_distilled,test,0.8034,"[0.7617, 0.8430]",26.44,"[19.83, 34.03]",98.51%,0
+mbv3s,int8_minmax_distilled,test,0.445,"[0.3810, 0.5080]",82.64,"[73.45, 91.91]",100.00%,0
+mbv3s,int8_entropy_distilled,test,0.445,"[0.3810, 0.5080]",82.64,"[73.45, 91.91]",100.00%,0

@@ -1,0 +1,1314 @@
+{
+  "train": [
+    "000001",
+    "000004",
+    "000005",
+    "000006",
+    "000007",
+    "000008",
+    "000009",
+    "000010",
+    "000011",
+    "000012",
+    "000013",
+    "000014",
+    "000016",
+    "000017",
+    "000019",
+    "000020",
+    "000021",
+    "000023",
+    "000024",
+    "000025",
+    "000028",
+    "000032",
+    "000034",
+    "000035",
+    "000036",
+    "000037",
+    "000038",
+    "000040",
+    "000041",
+    "000042",
+    "000043",
+    "000045",
+    "000047",
+    "000048",
+    "000049",
+    "000050",
+    "000052",
+    "000053",
+    "000054",
+    "000055",
+    "000056",
+    "000058",
+    "000059",
+    "000061",
+    "000062",
+    "000063",
+    "000065",
+    "000066",
+    "000067",
+    "000068",
+    "000070",
+    "000072",
+    "000076",
+    "000078",
+    "000079",
+    "000085",
+    "000087",
+    "000088",
+    "000089",
+    "000090",
+    "000091",
+    "000092",
+    "000093",
+    "000095",
+    "000096",
+    "000099",
+    "000100",
+    "000101",
+    "000102",
+    "000103",
+    "000104",
+    "000107",
+    "000108",
+    "000111",
+    "000112",
+    "000113",
+    "000116",
+    "000119",
+    "000124",
+    "000126",
+    "000130",
+    "000134",
+    "000135",
+    "000138",
+    "000139",
+    "000140",
+    "000141",
+    "000145",
+    "000147",
+    "000296",
+    "000299",
+    "000300",
+    "000301",
+    "000302",
+    "000303",
+    "000304",
+    "000305",
+    "000306",
+    "000308",
+    "000309"
+  ],
+  "val": [
+    "000015",
+    "000030",
+    "000033",
+    "000039",
+    "000051",
+    "000057",
+    "000060",
+    "000069",
+    "000097",
+    "000098",
+    "000114",
+    "000115",
+    "000117",
+    "000118",
+    "000123",
+    "000129",
+    "000131",
+    "000132",
+    "000133",
+    "000137",
+    "000295",
+    "000297",
+    "000298"
+  ],
+  "test": [
+    "000002",
+    "000003",
+    "000018",
+    "000022",
+    "000026",
+    "000027",
+    "000029",
+    "000031",
+    "000044",
+    "000046",
+    "000064",
+    "000071",
+    "000073",
+    "000074",
+    "000075",
+    "000077",
+    "000080",
+    "000081",
+    "000082",
+    "000083",
+    "000084",
+    "000086",
+    "000094",
+    "000105",
+    "000106",
+    "000109",
+    "000110",
+    "000120",
+    "000121",
+    "000122",
+    "000125",
+    "000127",
+    "000128",
+    "000136",
+    "000142",
+    "000143",
+    "000144",
+    "000146",
+    "000307",
+    "000310"
+  ],
+  "metadata": [
+    {
+      "stem": "000001",
+      "filename": "000001.png",
+      "image_path": "data\\udiat\\images\\000001.png",
+      "mask_path": "data\\udiat\\masks\\000001.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000002",
+      "filename": "000002.png",
+      "image_path": "data\\udiat\\images\\000002.png",
+      "mask_path": "data\\udiat\\masks\\000002.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000003",
+      "filename": "000003.png",
+      "image_path": "data\\udiat\\images\\000003.png",
+      "mask_path": "data\\udiat\\masks\\000003.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000004",
+      "filename": "000004.png",
+      "image_path": "data\\udiat\\images\\000004.png",
+      "mask_path": "data\\udiat\\masks\\000004.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000005",
+      "filename": "000005.png",
+      "image_path": "data\\udiat\\images\\000005.png",
+      "mask_path": "data\\udiat\\masks\\000005.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000006",
+      "filename": "000006.png",
+      "image_path": "data\\udiat\\images\\000006.png",
+      "mask_path": "data\\udiat\\masks\\000006.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000007",
+      "filename": "000007.png",
+      "image_path": "data\\udiat\\images\\000007.png",
+      "mask_path": "data\\udiat\\masks\\000007.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000008",
+      "filename": "000008.png",
+      "image_path": "data\\udiat\\images\\000008.png",
+      "mask_path": "data\\udiat\\masks\\000008.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000009",
+      "filename": "000009.png",
+      "image_path": "data\\udiat\\images\\000009.png",
+      "mask_path": "data\\udiat\\masks\\000009.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000010",
+      "filename": "000010.png",
+      "image_path": "data\\udiat\\images\\000010.png",
+      "mask_path": "data\\udiat\\masks\\000010.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000011",
+      "filename": "000011.png",
+      "image_path": "data\\udiat\\images\\000011.png",
+      "mask_path": "data\\udiat\\masks\\000011.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000012",
+      "filename": "000012.png",
+      "image_path": "data\\udiat\\images\\000012.png",
+      "mask_path": "data\\udiat\\masks\\000012.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000013",
+      "filename": "000013.png",
+      "image_path": "data\\udiat\\images\\000013.png",
+      "mask_path": "data\\udiat\\masks\\000013.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000014",
+      "filename": "000014.png",
+      "image_path": "data\\udiat\\images\\000014.png",
+      "mask_path": "data\\udiat\\masks\\000014.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000015",
+      "filename": "000015.png",
+      "image_path": "data\\udiat\\images\\000015.png",
+      "mask_path": "data\\udiat\\masks\\000015.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000016",
+      "filename": "000016.png",
+      "image_path": "data\\udiat\\images\\000016.png",
+      "mask_path": "data\\udiat\\masks\\000016.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000017",
+      "filename": "000017.png",
+      "image_path": "data\\udiat\\images\\000017.png",
+      "mask_path": "data\\udiat\\masks\\000017.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000018",
+      "filename": "000018.png",
+      "image_path": "data\\udiat\\images\\000018.png",
+      "mask_path": "data\\udiat\\masks\\000018.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000019",
+      "filename": "000019.png",
+      "image_path": "data\\udiat\\images\\000019.png",
+      "mask_path": "data\\udiat\\masks\\000019.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000020",
+      "filename": "000020.png",
+      "image_path": "data\\udiat\\images\\000020.png",
+      "mask_path": "data\\udiat\\masks\\000020.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000021",
+      "filename": "000021.png",
+      "image_path": "data\\udiat\\images\\000021.png",
+      "mask_path": "data\\udiat\\masks\\000021.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000022",
+      "filename": "000022.png",
+      "image_path": "data\\udiat\\images\\000022.png",
+      "mask_path": "data\\udiat\\masks\\000022.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000023",
+      "filename": "000023.png",
+      "image_path": "data\\udiat\\images\\000023.png",
+      "mask_path": "data\\udiat\\masks\\000023.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000024",
+      "filename": "000024.png",
+      "image_path": "data\\udiat\\images\\000024.png",
+      "mask_path": "data\\udiat\\masks\\000024.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000025",
+      "filename": "000025.png",
+      "image_path": "data\\udiat\\images\\000025.png",
+      "mask_path": "data\\udiat\\masks\\000025.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000026",
+      "filename": "000026.png",
+      "image_path": "data\\udiat\\images\\000026.png",
+      "mask_path": "data\\udiat\\masks\\000026.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000027",
+      "filename": "000027.png",
+      "image_path": "data\\udiat\\images\\000027.png",
+      "mask_path": "data\\udiat\\masks\\000027.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000028",
+      "filename": "000028.png",
+      "image_path": "data\\udiat\\images\\000028.png",
+      "mask_path": "data\\udiat\\masks\\000028.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000029",
+      "filename": "000029.png",
+      "image_path": "data\\udiat\\images\\000029.png",
+      "mask_path": "data\\udiat\\masks\\000029.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000030",
+      "filename": "000030.png",
+      "image_path": "data\\udiat\\images\\000030.png",
+      "mask_path": "data\\udiat\\masks\\000030.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000031",
+      "filename": "000031.png",
+      "image_path": "data\\udiat\\images\\000031.png",
+      "mask_path": "data\\udiat\\masks\\000031.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000032",
+      "filename": "000032.png",
+      "image_path": "data\\udiat\\images\\000032.png",
+      "mask_path": "data\\udiat\\masks\\000032.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000033",
+      "filename": "000033.png",
+      "image_path": "data\\udiat\\images\\000033.png",
+      "mask_path": "data\\udiat\\masks\\000033.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000034",
+      "filename": "000034.png",
+      "image_path": "data\\udiat\\images\\000034.png",
+      "mask_path": "data\\udiat\\masks\\000034.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000035",
+      "filename": "000035.png",
+      "image_path": "data\\udiat\\images\\000035.png",
+      "mask_path": "data\\udiat\\masks\\000035.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000036",
+      "filename": "000036.png",
+      "image_path": "data\\udiat\\images\\000036.png",
+      "mask_path": "data\\udiat\\masks\\000036.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000037",
+      "filename": "000037.png",
+      "image_path": "data\\udiat\\images\\000037.png",
+      "mask_path": "data\\udiat\\masks\\000037.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000038",
+      "filename": "000038.png",
+      "image_path": "data\\udiat\\images\\000038.png",
+      "mask_path": "data\\udiat\\masks\\000038.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000039",
+      "filename": "000039.png",
+      "image_path": "data\\udiat\\images\\000039.png",
+      "mask_path": "data\\udiat\\masks\\000039.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000040",
+      "filename": "000040.png",
+      "image_path": "data\\udiat\\images\\000040.png",
+      "mask_path": "data\\udiat\\masks\\000040.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000041",
+      "filename": "000041.png",
+      "image_path": "data\\udiat\\images\\000041.png",
+      "mask_path": "data\\udiat\\masks\\000041.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000042",
+      "filename": "000042.png",
+      "image_path": "data\\udiat\\images\\000042.png",
+      "mask_path": "data\\udiat\\masks\\000042.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000043",
+      "filename": "000043.png",
+      "image_path": "data\\udiat\\images\\000043.png",
+      "mask_path": "data\\udiat\\masks\\000043.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000044",
+      "filename": "000044.png",
+      "image_path": "data\\udiat\\images\\000044.png",
+      "mask_path": "data\\udiat\\masks\\000044.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000045",
+      "filename": "000045.png",
+      "image_path": "data\\udiat\\images\\000045.png",
+      "mask_path": "data\\udiat\\masks\\000045.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000046",
+      "filename": "000046.png",
+      "image_path": "data\\udiat\\images\\000046.png",
+      "mask_path": "data\\udiat\\masks\\000046.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000047",
+      "filename": "000047.png",
+      "image_path": "data\\udiat\\images\\000047.png",
+      "mask_path": "data\\udiat\\masks\\000047.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000048",
+      "filename": "000048.png",
+      "image_path": "data\\udiat\\images\\000048.png",
+      "mask_path": "data\\udiat\\masks\\000048.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000049",
+      "filename": "000049.png",
+      "image_path": "data\\udiat\\images\\000049.png",
+      "mask_path": "data\\udiat\\masks\\000049.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000050",
+      "filename": "000050.png",
+      "image_path": "data\\udiat\\images\\000050.png",
+      "mask_path": "data\\udiat\\masks\\000050.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000051",
+      "filename": "000051.png",
+      "image_path": "data\\udiat\\images\\000051.png",
+      "mask_path": "data\\udiat\\masks\\000051.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000052",
+      "filename": "000052.png",
+      "image_path": "data\\udiat\\images\\000052.png",
+      "mask_path": "data\\udiat\\masks\\000052.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000053",
+      "filename": "000053.png",
+      "image_path": "data\\udiat\\images\\000053.png",
+      "mask_path": "data\\udiat\\masks\\000053.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000054",
+      "filename": "000054.png",
+      "image_path": "data\\udiat\\images\\000054.png",
+      "mask_path": "data\\udiat\\masks\\000054.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000055",
+      "filename": "000055.png",
+      "image_path": "data\\udiat\\images\\000055.png",
+      "mask_path": "data\\udiat\\masks\\000055.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000056",
+      "filename": "000056.png",
+      "image_path": "data\\udiat\\images\\000056.png",
+      "mask_path": "data\\udiat\\masks\\000056.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000057",
+      "filename": "000057.png",
+      "image_path": "data\\udiat\\images\\000057.png",
+      "mask_path": "data\\udiat\\masks\\000057.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000058",
+      "filename": "000058.png",
+      "image_path": "data\\udiat\\images\\000058.png",
+      "mask_path": "data\\udiat\\masks\\000058.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000059",
+      "filename": "000059.png",
+      "image_path": "data\\udiat\\images\\000059.png",
+      "mask_path": "data\\udiat\\masks\\000059.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000060",
+      "filename": "000060.png",
+      "image_path": "data\\udiat\\images\\000060.png",
+      "mask_path": "data\\udiat\\masks\\000060.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000061",
+      "filename": "000061.png",
+      "image_path": "data\\udiat\\images\\000061.png",
+      "mask_path": "data\\udiat\\masks\\000061.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000062",
+      "filename": "000062.png",
+      "image_path": "data\\udiat\\images\\000062.png",
+      "mask_path": "data\\udiat\\masks\\000062.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000063",
+      "filename": "000063.png",
+      "image_path": "data\\udiat\\images\\000063.png",
+      "mask_path": "data\\udiat\\masks\\000063.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000064",
+      "filename": "000064.png",
+      "image_path": "data\\udiat\\images\\000064.png",
+      "mask_path": "data\\udiat\\masks\\000064.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000065",
+      "filename": "000065.png",
+      "image_path": "data\\udiat\\images\\000065.png",
+      "mask_path": "data\\udiat\\masks\\000065.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000066",
+      "filename": "000066.png",
+      "image_path": "data\\udiat\\images\\000066.png",
+      "mask_path": "data\\udiat\\masks\\000066.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000067",
+      "filename": "000067.png",
+      "image_path": "data\\udiat\\images\\000067.png",
+      "mask_path": "data\\udiat\\masks\\000067.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000068",
+      "filename": "000068.png",
+      "image_path": "data\\udiat\\images\\000068.png",
+      "mask_path": "data\\udiat\\masks\\000068.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000069",
+      "filename": "000069.png",
+      "image_path": "data\\udiat\\images\\000069.png",
+      "mask_path": "data\\udiat\\masks\\000069.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000070",
+      "filename": "000070.png",
+      "image_path": "data\\udiat\\images\\000070.png",
+      "mask_path": "data\\udiat\\masks\\000070.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000071",
+      "filename": "000071.png",
+      "image_path": "data\\udiat\\images\\000071.png",
+      "mask_path": "data\\udiat\\masks\\000071.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000072",
+      "filename": "000072.png",
+      "image_path": "data\\udiat\\images\\000072.png",
+      "mask_path": "data\\udiat\\masks\\000072.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000073",
+      "filename": "000073.png",
+      "image_path": "data\\udiat\\images\\000073.png",
+      "mask_path": "data\\udiat\\masks\\000073.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000074",
+      "filename": "000074.png",
+      "image_path": "data\\udiat\\images\\000074.png",
+      "mask_path": "data\\udiat\\masks\\000074.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000075",
+      "filename": "000075.png",
+      "image_path": "data\\udiat\\images\\000075.png",
+      "mask_path": "data\\udiat\\masks\\000075.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000076",
+      "filename": "000076.png",
+      "image_path": "data\\udiat\\images\\000076.png",
+      "mask_path": "data\\udiat\\masks\\000076.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000077",
+      "filename": "000077.png",
+      "image_path": "data\\udiat\\images\\000077.png",
+      "mask_path": "data\\udiat\\masks\\000077.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000078",
+      "filename": "000078.png",
+      "image_path": "data\\udiat\\images\\000078.png",
+      "mask_path": "data\\udiat\\masks\\000078.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000079",
+      "filename": "000079.png",
+      "image_path": "data\\udiat\\images\\000079.png",
+      "mask_path": "data\\udiat\\masks\\000079.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000080",
+      "filename": "000080.png",
+      "image_path": "data\\udiat\\images\\000080.png",
+      "mask_path": "data\\udiat\\masks\\000080.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000081",
+      "filename": "000081.png",
+      "image_path": "data\\udiat\\images\\000081.png",
+      "mask_path": "data\\udiat\\masks\\000081.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000082",
+      "filename": "000082.png",
+      "image_path": "data\\udiat\\images\\000082.png",
+      "mask_path": "data\\udiat\\masks\\000082.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000083",
+      "filename": "000083.png",
+      "image_path": "data\\udiat\\images\\000083.png",
+      "mask_path": "data\\udiat\\masks\\000083.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000084",
+      "filename": "000084.png",
+      "image_path": "data\\udiat\\images\\000084.png",
+      "mask_path": "data\\udiat\\masks\\000084.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000085",
+      "filename": "000085.png",
+      "image_path": "data\\udiat\\images\\000085.png",
+      "mask_path": "data\\udiat\\masks\\000085.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000086",
+      "filename": "000086.png",
+      "image_path": "data\\udiat\\images\\000086.png",
+      "mask_path": "data\\udiat\\masks\\000086.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000087",
+      "filename": "000087.png",
+      "image_path": "data\\udiat\\images\\000087.png",
+      "mask_path": "data\\udiat\\masks\\000087.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000088",
+      "filename": "000088.png",
+      "image_path": "data\\udiat\\images\\000088.png",
+      "mask_path": "data\\udiat\\masks\\000088.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000089",
+      "filename": "000089.png",
+      "image_path": "data\\udiat\\images\\000089.png",
+      "mask_path": "data\\udiat\\masks\\000089.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000090",
+      "filename": "000090.png",
+      "image_path": "data\\udiat\\images\\000090.png",
+      "mask_path": "data\\udiat\\masks\\000090.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000091",
+      "filename": "000091.png",
+      "image_path": "data\\udiat\\images\\000091.png",
+      "mask_path": "data\\udiat\\masks\\000091.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000092",
+      "filename": "000092.png",
+      "image_path": "data\\udiat\\images\\000092.png",
+      "mask_path": "data\\udiat\\masks\\000092.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000093",
+      "filename": "000093.png",
+      "image_path": "data\\udiat\\images\\000093.png",
+      "mask_path": "data\\udiat\\masks\\000093.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000094",
+      "filename": "000094.png",
+      "image_path": "data\\udiat\\images\\000094.png",
+      "mask_path": "data\\udiat\\masks\\000094.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000095",
+      "filename": "000095.png",
+      "image_path": "data\\udiat\\images\\000095.png",
+      "mask_path": "data\\udiat\\masks\\000095.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000096",
+      "filename": "000096.png",
+      "image_path": "data\\udiat\\images\\000096.png",
+      "mask_path": "data\\udiat\\masks\\000096.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000097",
+      "filename": "000097.png",
+      "image_path": "data\\udiat\\images\\000097.png",
+      "mask_path": "data\\udiat\\masks\\000097.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000098",
+      "filename": "000098.png",
+      "image_path": "data\\udiat\\images\\000098.png",
+      "mask_path": "data\\udiat\\masks\\000098.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000099",
+      "filename": "000099.png",
+      "image_path": "data\\udiat\\images\\000099.png",
+      "mask_path": "data\\udiat\\masks\\000099.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000100",
+      "filename": "000100.png",
+      "image_path": "data\\udiat\\images\\000100.png",
+      "mask_path": "data\\udiat\\masks\\000100.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000101",
+      "filename": "000101.png",
+      "image_path": "data\\udiat\\images\\000101.png",
+      "mask_path": "data\\udiat\\masks\\000101.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000102",
+      "filename": "000102.png",
+      "image_path": "data\\udiat\\images\\000102.png",
+      "mask_path": "data\\udiat\\masks\\000102.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000103",
+      "filename": "000103.png",
+      "image_path": "data\\udiat\\images\\000103.png",
+      "mask_path": "data\\udiat\\masks\\000103.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000104",
+      "filename": "000104.png",
+      "image_path": "data\\udiat\\images\\000104.png",
+      "mask_path": "data\\udiat\\masks\\000104.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000105",
+      "filename": "000105.png",
+      "image_path": "data\\udiat\\images\\000105.png",
+      "mask_path": "data\\udiat\\masks\\000105.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000106",
+      "filename": "000106.png",
+      "image_path": "data\\udiat\\images\\000106.png",
+      "mask_path": "data\\udiat\\masks\\000106.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000107",
+      "filename": "000107.png",
+      "image_path": "data\\udiat\\images\\000107.png",
+      "mask_path": "data\\udiat\\masks\\000107.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000108",
+      "filename": "000108.png",
+      "image_path": "data\\udiat\\images\\000108.png",
+      "mask_path": "data\\udiat\\masks\\000108.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000109",
+      "filename": "000109.png",
+      "image_path": "data\\udiat\\images\\000109.png",
+      "mask_path": "data\\udiat\\masks\\000109.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000110",
+      "filename": "000110.png",
+      "image_path": "data\\udiat\\images\\000110.png",
+      "mask_path": "data\\udiat\\masks\\000110.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000111",
+      "filename": "000111.png",
+      "image_path": "data\\udiat\\images\\000111.png",
+      "mask_path": "data\\udiat\\masks\\000111.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000112",
+      "filename": "000112.png",
+      "image_path": "data\\udiat\\images\\000112.png",
+      "mask_path": "data\\udiat\\masks\\000112.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000113",
+      "filename": "000113.png",
+      "image_path": "data\\udiat\\images\\000113.png",
+      "mask_path": "data\\udiat\\masks\\000113.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000114",
+      "filename": "000114.png",
+      "image_path": "data\\udiat\\images\\000114.png",
+      "mask_path": "data\\udiat\\masks\\000114.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000115",
+      "filename": "000115.png",
+      "image_path": "data\\udiat\\images\\000115.png",
+      "mask_path": "data\\udiat\\masks\\000115.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000116",
+      "filename": "000116.png",
+      "image_path": "data\\udiat\\images\\000116.png",
+      "mask_path": "data\\udiat\\masks\\000116.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000117",
+      "filename": "000117.png",
+      "image_path": "data\\udiat\\images\\000117.png",
+      "mask_path": "data\\udiat\\masks\\000117.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000118",
+      "filename": "000118.png",
+      "image_path": "data\\udiat\\images\\000118.png",
+      "mask_path": "data\\udiat\\masks\\000118.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000119",
+      "filename": "000119.png",
+      "image_path": "data\\udiat\\images\\000119.png",
+      "mask_path": "data\\udiat\\masks\\000119.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000120",
+      "filename": "000120.png",
+      "image_path": "data\\udiat\\images\\000120.png",
+      "mask_path": "data\\udiat\\masks\\000120.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000121",
+      "filename": "000121.png",
+      "image_path": "data\\udiat\\images\\000121.png",
+      "mask_path": "data\\udiat\\masks\\000121.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000122",
+      "filename": "000122.png",
+      "image_path": "data\\udiat\\images\\000122.png",
+      "mask_path": "data\\udiat\\masks\\000122.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000123",
+      "filename": "000123.png",
+      "image_path": "data\\udiat\\images\\000123.png",
+      "mask_path": "data\\udiat\\masks\\000123.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000124",
+      "filename": "000124.png",
+      "image_path": "data\\udiat\\images\\000124.png",
+      "mask_path": "data\\udiat\\masks\\000124.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000125",
+      "filename": "000125.png",
+      "image_path": "data\\udiat\\images\\000125.png",
+      "mask_path": "data\\udiat\\masks\\000125.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000126",
+      "filename": "000126.png",
+      "image_path": "data\\udiat\\images\\000126.png",
+      "mask_path": "data\\udiat\\masks\\000126.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000127",
+      "filename": "000127.png",
+      "image_path": "data\\udiat\\images\\000127.png",
+      "mask_path": "data\\udiat\\masks\\000127.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000128",
+      "filename": "000128.png",
+      "image_path": "data\\udiat\\images\\000128.png",
+      "mask_path": "data\\udiat\\masks\\000128.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000129",
+      "filename": "000129.png",
+      "image_path": "data\\udiat\\images\\000129.png",
+      "mask_path": "data\\udiat\\masks\\000129.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000130",
+      "filename": "000130.png",
+      "image_path": "data\\udiat\\images\\000130.png",
+      "mask_path": "data\\udiat\\masks\\000130.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000131",
+      "filename": "000131.png",
+      "image_path": "data\\udiat\\images\\000131.png",
+      "mask_path": "data\\udiat\\masks\\000131.png",
+      "class_label": "benign"
+    },
+    {
+      "stem": "000132",
+      "filename": "000132.png",
+      "image_path": "data\\udiat\\images\\000132.png",
+      "mask_path": "data\\udiat\\masks\\000132.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000133",
+      "filename": "000133.png",
+      "image_path": "data\\udiat\\images\\000133.png",
+      "mask_path": "data\\udiat\\masks\\000133.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000134",
+      "filename": "000134.png",
+      "image_path": "data\\udiat\\images\\000134.png",
+      "mask_path": "data\\udiat\\masks\\000134.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000135",
+      "filename": "000135.png",
+      "image_path": "data\\udiat\\images\\000135.png",
+      "mask_path": "data\\udiat\\masks\\000135.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000136",
+      "filename": "000136.png",
+      "image_path": "data\\udiat\\images\\000136.png",
+      "mask_path": "data\\udiat\\masks\\000136.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000137",
+      "filename": "000137.png",
+      "image_path": "data\\udiat\\images\\000137.png",
+      "mask_path": "data\\udiat\\masks\\000137.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000138",
+      "filename": "000138.png",
+      "image_path": "data\\udiat\\images\\000138.png",
+      "mask_path": "data\\udiat\\masks\\000138.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000139",
+      "filename": "000139.png",
+      "image_path": "data\\udiat\\images\\000139.png",
+      "mask_path": "data\\udiat\\masks\\000139.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000140",
+      "filename": "000140.png",
+      "image_path": "data\\udiat\\images\\000140.png",
+      "mask_path": "data\\udiat\\masks\\000140.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000141",
+      "filename": "000141.png",
+      "image_path": "data\\udiat\\images\\000141.png",
+      "mask_path": "data\\udiat\\masks\\000141.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000142",
+      "filename": "000142.png",
+      "image_path": "data\\udiat\\images\\000142.png",
+      "mask_path": "data\\udiat\\masks\\000142.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000143",
+      "filename": "000143.png",
+      "image_path": "data\\udiat\\images\\000143.png",
+      "mask_path": "data\\udiat\\masks\\000143.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000144",
+      "filename": "000144.png",
+      "image_path": "data\\udiat\\images\\000144.png",
+      "mask_path": "data\\udiat\\masks\\000144.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000145",
+      "filename": "000145.png",
+      "image_path": "data\\udiat\\images\\000145.png",
+      "mask_path": "data\\udiat\\masks\\000145.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000146",
+      "filename": "000146.png",
+      "image_path": "data\\udiat\\images\\000146.png",
+      "mask_path": "data\\udiat\\masks\\000146.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000147",
+      "filename": "000147.png",
+      "image_path": "data\\udiat\\images\\000147.png",
+      "mask_path": "data\\udiat\\masks\\000147.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000295",
+      "filename": "000295.png",
+      "image_path": "data\\udiat\\images\\000295.png",
+      "mask_path": "data\\udiat\\masks\\000295.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000296",
+      "filename": "000296.png",
+      "image_path": "data\\udiat\\images\\000296.png",
+      "mask_path": "data\\udiat\\masks\\000296.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000297",
+      "filename": "000297.png",
+      "image_path": "data\\udiat\\images\\000297.png",
+      "mask_path": "data\\udiat\\masks\\000297.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000298",
+      "filename": "000298.png",
+      "image_path": "data\\udiat\\images\\000298.png",
+      "mask_path": "data\\udiat\\masks\\000298.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000299",
+      "filename": "000299.png",
+      "image_path": "data\\udiat\\images\\000299.png",
+      "mask_path": "data\\udiat\\masks\\000299.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000300",
+      "filename": "000300.png",
+      "image_path": "data\\udiat\\images\\000300.png",
+      "mask_path": "data\\udiat\\masks\\000300.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000301",
+      "filename": "000301.png",
+      "image_path": "data\\udiat\\images\\000301.png",
+      "mask_path": "data\\udiat\\masks\\000301.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000302",
+      "filename": "000302.png",
+      "image_path": "data\\udiat\\images\\000302.png",
+      "mask_path": "data\\udiat\\masks\\000302.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000303",
+      "filename": "000303.png",
+      "image_path": "data\\udiat\\images\\000303.png",
+      "mask_path": "data\\udiat\\masks\\000303.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000304",
+      "filename": "000304.png",
+      "image_path": "data\\udiat\\images\\000304.png",
+      "mask_path": "data\\udiat\\masks\\000304.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000305",
+      "filename": "000305.png",
+      "image_path": "data\\udiat\\images\\000305.png",
+      "mask_path": "data\\udiat\\masks\\000305.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000306",
+      "filename": "000306.png",
+      "image_path": "data\\udiat\\images\\000306.png",
+      "mask_path": "data\\udiat\\masks\\000306.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000307",
+      "filename": "000307.png",
+      "image_path": "data\\udiat\\images\\000307.png",
+      "mask_path": "data\\udiat\\masks\\000307.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000308",
+      "filename": "000308.png",
+      "image_path": "data\\udiat\\images\\000308.png",
+      "mask_path": "data\\udiat\\masks\\000308.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000309",
+      "filename": "000309.png",
+      "image_path": "data\\udiat\\images\\000309.png",
+      "mask_path": "data\\udiat\\masks\\000309.png",
+      "class_label": "malignant"
+    },
+    {
+      "stem": "000310",
+      "filename": "000310.png",
+      "image_path": "data\\udiat\\images\\000310.png",
+      "mask_path": "data\\udiat\\masks\\000310.png",
+      "class_label": "malignant"
+    }
+  ]
+}

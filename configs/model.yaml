@@ -1,0 +1,18 @@
+r34:
+  architecture: "Unet"
+  encoder_name: "resnet34"
+  encoder_weights: "imagenet"
+  in_channels: 3
+  classes: 1
+  activation: null # Raw logits output
+
+mbv3s:
+  architecture: "Unet"
+  encoder_name: "tu-mobilenetv3_small_100"
+  encoder_name_fallback: "timm-mobilenetv3_small_100"
+  encoder_weights: "imagenet"
+  in_channels: 3
+  classes: 1
+  activation: null # Raw logits output
+  # Shrunk decoder channels so total params stay within 2.0M - 3.0M
+  decoder_channels: [128, 96, 64, 32, 16]

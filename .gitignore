@@ -1,0 +1,24 @@
+# Virtual environment
+.venv/
+__pycache__/
+*.py[cod]
+
+# Secrets and local environment
+.env
+
+# Raw and intermediate data
+data/raw/
+data/processed/
+
+
+# Cache and build files
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+P/
+
