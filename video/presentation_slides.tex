@@ -11,12 +11,12 @@
 \usepackage{xcolor}
 \usepackage{tikz}
 \usepackage{hyperref}
-
+\usepackage{tcolorbox}
 % Clean minimal Beamer styling
-\usetheme{Madrid}
+\usetheme{default}
 \usecolortheme{whale}
-
-% Custom Color Palette
+\usepackage{animate}
+% Custom Colour Palette
 \definecolor{MedNavy}{RGB}{15, 23, 42}
 \definecolor{MedBlue}{RGB}{30, 64, 175}
 \definecolor{MedLightBlue}{RGB}{239, 246, 255}
@@ -43,7 +43,8 @@
   \leavevmode%
   \hbox{%
   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
-    \usebeamerfont{author in head/foot}Speakers A, B, C (Equal Contribution)
+    \usebeamerfont{author in head/foot} Jaskirat Singh Maskeen, Fayzaa Vora, Vivek Raj
+    
   \end{beamercolorbox}%
   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
     \usebeamerfont{title in head/foot}Edge-Native POCUS Breast Tumor Segmentation
@@ -55,11 +56,23 @@
 }
 
 % Title Metadata
-\title[\textbf{Edge POCUS Segmentation}]{\textbf{Edge-Native Real-Time Breast Ultrasound Tumor Segmentation}}
-\subtitle{Extreme Quantization, Mixed-Precision Graph Surgery, and Low-Latency POCUS Streaming}
-\author{\textbf{Speaker A \quad$\cdot$\quad Speaker B \quad$\cdot$\quad Speaker C}}
-\institute{\textit{Department of Biomedical Engineering $\cdot$ Medical Image Computing Project}}
-\date{November 2026}
+\title[\textbf{Edge POCUS Segmentation}]{\textbf{Fast and Lightweight Segmentation for Breast Ultrasound}}
+\subtitle{ Course Project ES 657: Biomedical Ultrasound}
+\author[Maskeen et al.]{%
+  Jaskirat Singh Maskeen\inst{1} \and 
+  Fayzaa Vora\inst{2} \and 
+  Vivek Raj\inst{3}%
+}
+
+\institute[CSE, ME \& EE]{%
+  \inst{1} \textit{Department of Computer Science Engineering} \\
+  \inst{2} \textit{Department of Mechanical Engineering} \\
+  \inst{3} \textit{Department of Electrical Engineering}%
+}
+
+\date{17$^{th}$ November 2026}
+
+
 
 \begin{document}
 
@@ -69,126 +82,122 @@
 \begin{frame}[plain]
   \titlepage
   \vspace{-1.8em}
-  \begin{center}
-    \footnotesize
-    \textcolor{MedSlate}{\textbf{Strict 7-Minute Video Defense} $\cdot$ Equal Contribution Across All Three Authors}
-  \end{center}
 \end{frame}
 
 % ==============================================================================
 % SLIDE 2: Clinical Challenge & POCUS Dilemma (Speaker A)
 % ==============================================================================
-\begin{frame}{Clinical Motivation \& The Point-of-Care Ultrasound (POCUS) Dilemma}
-\begin{columns}[T]
-  \begin{column}{0.48\textwidth}
-    \begin{block}{\textbf{Clinical Reality: Breast Tumor Triage}}
-      \scriptsize
-      \begin{itemize}\setlength{\itemsep}{1pt}
-        \item Breast cancer is the leading global malignancy among women; early detection drastically improves survival.
-        \item Point-of-Care Ultrasound (POCUS) provides non-ionizing, accessible, real-time bedside imaging.
-        \item \textbf{Acoustic Realities:} Speckle noise, acoustic shadows, and poorly defined, irregular tumor boundaries.
-        \item \textbf{Benchmark:} BUSI Cohort (780 B-mode scans: 437 benign, 210 malignant, 133 normal; 776 deduplicated).
-      \end{itemize}
-    \end{block}
-  \end{column}
+\begin{frame}{Motivation \& The POCUS Dilemma}
 
-  \begin{column}{0.48\textwidth}
-    \begin{alertblock}{\textbf{The Edge Computing Bottleneck}}
-      \scriptsize
-      \begin{itemize}\setlength{\itemsep}{1pt}
-        \item \textbf{Hardware Limits:} Handheld battery-powered probes lack discrete GPUs; must run on constrained mobile APUs/CPUs.
-        \item \textbf{Hard Latency Budget:} Live cine scanning demands \textbf{$\ge$30 FPS} ($\le$33.3 ms per frame) for sonographer guidance.
-        \item \textbf{Storage Footprint:} Embedded systems require compact models ($<$10 MB).
-        \item \textbf{Privacy Obligation:} Cloud transmission breaches patient data protection and introduces unpredictable latency.
-      \end{itemize}
-    \end{alertblock}
-  \end{column}
-\end{columns}
-\vspace{0.4em}
-\begin{center}
-  \scriptsize
-  \textbf{Goal:} Engineer an ultra-compact sub-3 MB, 30 Hz edge segmentation model matching heavy cloud U-Nets without clinical compromise.
-\end{center}
+\textbf{Clinical Context}
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Point-of-Care Ultrasound (POCUS) offers non-ionising, real-time bedside imaging for early breast tumour triage.
+  \item B-mode scans suffer from heavy speckle noise, acoustic shadowing, and indistinct lesion boundaries.
+  \item \textbf{Dataset:} BUSI Collection: 776 de-duplicated scans (437 benign, 210 malignant, 133 normal).
+\end{itemize}
+
+\vspace{0.6em}
+
+\textbf{Edge Deployment Constraints}
+\begin{itemize}\setlength{\itemsep}{4pt}
+  \item Handheld battery-powered probes run on mobile CPUs/APUs without discrete GPUs.
+  \item Live video scanning requires $\ge 30\text{ FPS}$ ($\le 33.3\text{ ms/frame}$) for it to guide the sonographer.
+  \item On-device memory limits ($< 10\text{ MB}$) and patient privacy rules don't allow offloading to the cloud.
+\end{itemize}
+
+\vspace{0.8em}
+\textbf{Goal:} Build a $< 3\text{ MB}$, $30\text{ Hz}$ segmentation model that retains the accuracy of bigger models on edge devices.
+
 \end{frame}
 
 % ==============================================================================
 % SLIDE 3: Architectural Progression & Loss Formulation (Speaker A)
+% ==============================================================================% ==============================================================================
+% SLIDE: Architectural Progression: Heavyweight vs. Lightweight Backbones
 % ==============================================================================
-\begin{frame}{Architectural Progression: Heavyweight vs. Lightweight Edge Backbones}
-\begin{columns}[T]
-  \begin{column}{0.54\textwidth}
-    \textbf{\footnotesize Backbone Architectural Design:}
-    \vspace{0.1em}
-    \begin{itemize}\setlength{\itemsep}{1pt}\scriptsize
-      \item \textbf{ResNet-34 U-Net (Heavyweight Teacher Baseline):}
-        \begin{itemize}\setlength{\itemsep}{0pt}\scriptsize
-          \item Standard $3\times3$ residual convolutions ($C \in [64, 512]$).
-          \item \textbf{24.44M parameters $\cdot$ 93.22 MB} disk footprint.
-          \item High fidelity, but intractable on edge CPUs (74.0 ms latency $\to$ 13.5 FPS; drops 61.9\% of 30 Hz frames).
-        \end{itemize}
-      \item \textbf{MobileNetV3-Small U-Net (Edge-Native Candidate):}
-        \begin{itemize}\setlength{\itemsep}{0pt}\scriptsize
-          \item Inverted residual bottlenecks with Depthwise Separable Convolutions ($3\times3$ DW + $1\times1$ Pointwise).
-          \item Hard-swish activations + Squeeze-and-Excitation (SE).
-          \item \textbf{2.15M parameters $\cdot$ 8.23 MB} (11.4$\times$ smaller).
-          \item Native CPU latency: 23.3 ms $\to$ \textbf{42.9 FPS} (sustains 30 Hz).
-        \end{itemize}
+\begin{frame}{Architectural Progression: Heavyweight vs.\ Lightweight Backbones}
+\begin{columns}[T, onlytextwidth]
+  \begin{column}{0.52\textwidth}
+    \textbf{ResNet-34 U-Net (Teacher Baseline)}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item Standard $3\times3$ residual convolutions ($C \in [64, 512]$).
+      \item \textbf{Footprint:} $24.44\text{M}$ parameters ($93.22\text{ MB}$).
+      \item \textbf{CPU Latency:} $74.0\text{ ms}$ ($13.5\text{ FPS}$); drops $61.9\%$ of frames at $30\text{ Hz}$.
+    \end{itemize}
+
+    \vspace{0.6em}
+
+    \textbf{MobileNetV3-Small U-Net (Edge Candidate)}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item Inverted residuals with depthwise separable convolutions ($3\times3\text{ DW} + 1\times1\text{ PW}$).
+      \item Hard-swish activations and Squeeze-and-Excitation (SE).
+      \item \textbf{Footprint:} $2.15\text{M}$ parameters ($8.23\text{ MB}$, $11.4\times$ smaller).
+      \item \textbf{CPU Latency:} $23.3\text{ ms}$ ($\mathbf{42.9\text{ FPS}}$); sustains real-time $30\text{ Hz}$.
     \end{itemize}
   \end{column}
 
-  \begin{column}{0.44\textwidth}
-    \begin{block}{\textbf{Compound Loss Formulation}}
-      \scriptsize
-      Addresses severe foreground/background imbalance:
-      $$\mathcal{L}_{\text{task}} = 0.5\,\mathcal{L}_{\text{BCE}} + 0.5\,\mathcal{L}_{\text{Dice}}$$
-      \vspace{-0.7em}
-      $$\mathcal{L}_{\text{BCE}} = -\frac{1}{N}\sum [y_i \log p_i + (1-y_i)\log(1-p_i)]$$
-      \vspace{-0.7em}
-      $$\mathcal{L}_{\text{Dice}} = 1 - \frac{2 \sum p_i y_i + \epsilon}{\sum p_i + \sum y_i + \epsilon}, \quad \epsilon = 10^{-6}$$
-    \end{block}
-    \vspace{-0.2em}
-    \begin{exampleblock}{\textbf{Baseline FP32 Parity}}
-      \scriptsize Held-out BUSI Test Set: ResNet-34 achieves \textbf{0.8012 DSC}; MobileNetV3 achieves \textbf{0.7659 DSC} (within 3.5\% DSC with 11.4$\times$ fewer weights!).
-    \end{exampleblock}
+  \begin{column}{0.45\textwidth}
+  
+    \begin{tcolorbox}[
+    title={\textbf{Compound Loss Formulation}}, 
+    colframe=MedBlue, % Outline and title background colour
+    colback=white,          % Keeps the body background white
+    coltitle=white,         % Title text colour
+    boxrule=1pt,            % Outline thickness          % Matches standard Beamer corners
+]
+\scriptsize
+    Handles foreground-background class imbalance:
+    $$\mathcal{L}_{\text{task}} = 0.5\,\mathcal{L}_{\text{BCE}} + 0.5\,\mathcal{L}_{\text{Dice}}$$
+    \vspace{-0.7em}
+    $$\mathcal{L}_{\text{BCE}} = -\frac{1}{N}\sum \left[y_i \log p_i + (1-y_i)\log(1-p_i)\right]$$
+    \vspace{-0.7em}
+    $$\mathcal{L}_{\text{Dice}} = 1 - \frac{2 \sum p_i y_i + \epsilon}{\sum p_i + \sum y_i + \epsilon}, \quad \epsilon = 10^{-6}$$
+\end{tcolorbox}
+
+    \vspace{0.6em}
+
+    \textbf{FP32 Baseline (BUSI Test Set)}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item \textbf{ResNet-34:} $\mathbf{0.8012\text{ DSC}}$
+      \item \textbf{MobileNetV3:} $\mathbf{0.7659\text{ DSC}}$ (within $3.5\%$ DSC using $11.4\times$ fewer parameters).
+    \end{itemize}
   \end{column}
 \end{columns}
 \end{frame}
 
-% ==============================================================================
-% SLIDE 4: Quantization Breakdown & Failure Discovery (Speaker B)
-% ==============================================================================
-\begin{frame}{Quantization Methodology \& The Catastrophic Edge Collapse}
-\begin{columns}[T]
-  \begin{column}{0.53\textwidth}
-    \textbf{\footnotesize Static INT8 Quantize-Dequantize (QDQ) Scheme:}
-    \vspace{0.1em}
-    \begin{itemize}\setlength{\itemsep}{1pt}\scriptsize
-      \item Signed 8-bit integer affine mapping ($q \in [-128, 127]$):
-        $$q = \text{clip}\left(\lfloor x/S \rceil, -128, 127\right), \quad \hat{x} = S \cdot q$$
-      \item \textbf{Weights:} Symmetric per-channel scale $S_c = \max |W_c| / 127$.
-      \item \textbf{Activations:} Symmetric per-tensor calibration on 100 scans.
-    \end{itemize}
 
-    \vspace{-0.2em}
-    \begin{alertblock}{\textbf{The Architectural Divergence Discovery}}
-      \scriptsize
-      \begin{itemize}\setlength{\itemsep}{1pt}
-        \item \textbf{ResNet-34 INT8: Lossless!} Drops by only $-0.0009$ DSC ($0.8012 \to \mathbf{0.8003}$); size cuts 3.95$\times$ to \textbf{23.59 MB}.
-        \item \textbf{MobileNetV3 INT8: Severe Collapse!} Drops from 0.7659 to \textbf{0.4355 DSC} ($\Delta\text{DSC} = -0.3304$).
-        \item HD95 surges from 35.1 px to \textbf{86.97 px} (phantom masks).
-      \end{itemize}
-    \end{alertblock}
+% ==============================================================================
+% SLIDE: Quantisation Methodology & Edge Collapse
+% ==============================================================================
+% ==============================================================================
+% SLIDE A: Static INT8 Quantization & Architectural Divergence
+% ==============================================================================
+\begin{frame}{Static INT8 Quantization \& Architectural Divergence}
+\begin{columns}[T, onlytextwidth]
+  \begin{column}{0.48\textwidth}
+    \textbf{Static INT8 Quantization (QDQ)}
+    \begin{itemize}\setlength{\itemsep}{4pt}\footnotesize
+      \item Signed 8-bit affine mapping ($q \in [-128, 127]$):
+        $$q = \text{clip}\left(\lfloor x/S \rceil, -128, 127\right), \quad \hat{x} = S \cdot q$$
+      \item \textbf{Weights:} Symmetric per-channel ($S_c = \max |W_c| / 127$).
+      \item \textbf{Activations:} Symmetric per-tensor, calibrated offline on 100 scans.
+    \end{itemize}
   \end{column}
 
-  \begin{column}{0.45\textwidth}
-    \begin{block}{\textbf{Root Cause: Depthwise Bottleneck}}
-      \scriptsize
-      In depthwise convolutions ($group = C_{\text{in}}$), each kernel operates on a single channel without cross-channel averaging. Dynamic ranges fluctuate wildly; uniform INT8 clipping destroys faint acoustic tumor boundaries.
-    \end{block}
-    \vspace{-0.3em}
-    \centering
-    \includegraphics[width=0.95\textwidth,height=0.30\textheight,keepaspectratio]{../figures/study_s1_stratified_damage.png}\\
-    \tiny\textcolor{MedSlate}{\textbf{Mini-Study S1:} Soft margins ($\Delta\text{DSC}=-0.40$) and malignant tumors ($-0.40$) suffer up to $2\times$ worse INT8 damage than sharp margins ($-0.20$); Rescued Mixed recovers overall $\Delta\text{DSC}$ to $-0.04$.}
+  \begin{column}{0.48\textwidth}
+    \textbf{Architectural Divergence}
+    \begin{itemize}\setlength{\itemsep}{4pt}\footnotesize
+      \item \textbf{ResNet-34 (Lossless):} $0.8012 \to \mathbf{0.8003}\text{ DSC}$ ($\Delta = -0.0009$); compressed $3.95\times$ to $23.59\text{ MB}$.
+      \item \textbf{MobileNetV3 (Collapse):} $0.7659 \to \mathbf{0.4355}\text{ DSC}$ ($\Delta = -0.3304$).
+      \item \textbf{Boundary Failure:} HD95 degrades from $35.1\text{ px}$ to $\mathbf{86.97\text{ px}}$ due to phantom masks.
+    \end{itemize}
+
+\textbf{Why MobileNetV3 Collapses}
+    \begin{itemize}\setlength{\itemsep}{4pt}\footnotesize
+      \item \textbf{No Cross-Channel Averaging:} Depthwise kernels ($\text{groups} = C_{\text{in}}$) operate on isolated channels.
+      \item \textbf{Dynamic Range Swings:} Extreme per-channel activation outliers stretch the global tensor scale $S$.
+      \item \textbf{Margin Erasure:} Uniform INT8 clipping destroys low-contrast tumour boundaries.
+    \end{itemize}
   \end{column}
 \end{columns}
 \end{frame}
@@ -196,318 +205,388 @@
 % ==============================================================================
 % SLIDE 5: Extension A: Sensitivity Knob & Graph Surgery (Speaker B)
 % ==============================================================================
-\begin{frame}{Extension A: Mixed-Precision Graph Surgery \& Zero-Recomputation Knob}
-\begin{columns}[T]
+% ==============================================================================
+% SLIDE: Extension A: Mixed-Precision Graph Surgery & Zero-Recomputation Knob
+% ==============================================================================
+\begin{frame}{Mixed-Precision Model}
+\begin{columns}[T, onlytextwidth]
   \begin{column}{0.52\textwidth}
-    \textbf{\footnotesize Diagnosing Layer-Wise Fragility:}
-    \vspace{0.1em}
-    \begin{itemize}\setlength{\itemsep}{1pt}\scriptsize
-      \item Computed empirical \textbf{Signal-to-Quantization-Noise Ratio (SQNR)}:
-        $$\textstyle \text{SQNR}_l = 10 \log_{10} \left( \sum_i x_{l,i}^2 / \sum_i (x_{l,i} - \hat{x}_{l,i})^2 \right) \quad [\text{dB}]$$
-      \item Structural graph analysis isolated fragile nodes: input/output boundaries and inverted bottleneck depthwise convolutions ($groups > 1$).
+    \textbf{Diagnosing Layer-Wise Fragility}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item Empirical Signal-to-Quantization-Noise Ratio (SQNR):
+        $$\textstyle \text{SQNR}_l = 10 \log_{10} \left( \frac{\sum_i x_{l,i}^2}{\sum_i (x_{l,i} - \hat{x}_{l,i})^2} \right) \text{ [dB]}$$
+      \item Graph analysis isolated the most sensitive layers: I/O boundaries and depthwise convolutions ($\text{groups} > 1$).
     \end{itemize}
 
-    \vspace{-0.2em}
-    \begin{exampleblock}{\textbf{Rescued Operating Point ($k^* = 13$)}}
-      \scriptsize
-      \begin{itemize}\setlength{\itemsep}{1pt}
-        \item Preserves just \textbf{13 of 63} convolutions in FP32; quantizes remaining 50 layers to INT8.
-        \item \textbf{Test DSC recovers to 0.7263} (Median \textbf{0.8448}) with HD95 = 35.2 px.
-        \item Retains \textbf{3.30$\times$ compression} (\textbf{2.50 MB} vs 8.23 MB) at \textbf{42.9 FPS}.
-      \end{itemize}
-    \end{exampleblock}
+    \vspace{0.6em}
+
+    \textbf{Rescued Operating Point ($k^* = 13$)}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item Keeps \textbf{13 of 63} convolutions in FP32; quantizes the remaining 50 layers to INT8.
+      \item \textbf{Accuracy:} Test DSC recovers to $\mathbf{0.7263}$ (Median $\mathbf{0.8448}$), with HD95 at $35.2\text{ px}$.
+      \item \textbf{Efficiency:} Retains $\mathbf{3.30\times}$ compression ($\mathbf{2.50\text{ MB}}$ vs.\ $8.23\text{ MB}$) at $\mathbf{42.9\text{ FPS}}$.
+    \end{itemize}
   \end{column}
 
-  \begin{column}{0.46\textwidth}
+  \begin{column}{0.45\textwidth}
     \centering
-    \includegraphics[width=0.95\textwidth,height=0.38\textheight,keepaspectratio]{../figures/extA_k_sweep_curve.png}
-    \vspace{-0.2em}
-    \begin{block}{\textbf{Zero-Recomputation CLI Knob}}
-      \scriptsize Implemented in \texttt{src/quant/knob.py}: Allows sonographers to dynamically dial $k \in [0, 63]$ without retraining weights.
-    \end{block}
+    \includegraphics[width=\textwidth]{figures/extA_k_sweep_curve.png}
+
+    \vspace{0.6em}
+    \raggedright
+    \textbf{Zero-Recomputation CLI Knob}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item Implemented in \texttt{src/quant/knob.py}.
+      \item Dynamically adjusts $k \in [0, 63]$ at deployment without retraining weights.
+    \end{itemize}
   \end{column}
 \end{columns}
 \end{frame}
+
+
+% ==============================================================================
+% SLIDE B: Root Cause of Edge Collapse & Stratified Damage
+% ==============================================================================
+
+\begin{frame}{Static INT8 Quantization \& Architectural Divergence}
+\begin{center}
+ \includegraphics[width=0.85\textwidth]{figures/study_s1_stratified_damage.png}
+\end{center}
+    \vspace{0.3em}
+    \scriptsize\textcolor{black}{Soft margins and malignant lesions ($\Delta\text{DSC}=-0.40$) suffer $2\times$ the INT8 degradation of sharp margins ($-0.20$). Mixed precision restores $\Delta\text{DSC}$ to $-0.04$.}
+\end{frame}
+
 
 % ==============================================================================
 % SLIDE 6: Knowledge Distillation & Distil-Quantization (Speaker B)
 % ==============================================================================
+% ==============================================================================
+% SLIDE: Knowledge Distillation: Overcoming Edge Capacity Limits
+% ==============================================================================
 \begin{frame}{Knowledge Distillation: Overcoming Edge Capacity Limits}
-\begin{columns}[T]
+\begin{columns}[T, onlytextwidth]
   \begin{column}{0.52\textwidth}
-    \textbf{\footnotesize Teacher-Student Distillation Framework:}
-    \vspace{0.1em}
-    \begin{itemize}\setlength{\itemsep}{1pt}\scriptsize
-      \item \textbf{Teacher:} Pretrained ResNet-34 U-Net (FP32, 24.44M params).
-      \item \textbf{Student:} MobileNetV3-Small U-Net (2.15M params).
-      \item \textbf{Compound Distillation Objective ($\alpha=0.50, T=2.0$):}
-        $$\mathcal{L}_{\text{KD}} = 0.5 \mathcal{L}_{\text{task}} + 0.5 \cdot T^2 \mathcal{L}_{\text{BCE}}\left(\sigma(z_s/T),\; \sigma(z_t/T)\right)$$
-        \tiny where $T=2.0$ softens tumor boundary logits to transfer spatial dark knowledge.
+    \textbf{Teacher-Student Framework}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item \textbf{Teacher:} Pretrained ResNet-34 U-Net (FP32, $24.44\text{M}$ params).
+      \item \textbf{Student:} MobileNetV3-Small U-Net ($2.15\text{M}$ params).
+      \item \textbf{Distillation Loss ($\alpha=0.50, T=2.0$):}
+        $$\textstyle \mathcal{L}_{\text{KD}} = 0.5\,\mathcal{L}_{\text{task}} + 0.5\,T^2 \mathcal{L}_{\text{BCE}}\left(\sigma(z_s/T),\; \sigma(z_t/T)\right)$$
+      \item Temperature scaling ($T=2.0$) softens boundary logits to transfer spatial dark knowledge.
     \end{itemize}
 
-    \vspace{-0.2em}
-    \begin{exampleblock}{\textbf{Distillation Breakthrough}}
-      \scriptsize
-      \begin{itemize}\setlength{\itemsep}{1pt}
-        \item Distilled MobileNetV3 reaches \textbf{0.8034 DSC} [0.7617, 0.8430] (Median \textbf{0.8916}, HD95 \textbf{26.44 px}).
-        \item \textbf{Surpasses the Teacher (0.8012)} with 11.4$\times$ fewer weights!
-      \end{itemize}
-    \end{exampleblock}
+    \vspace{0.6em}
+
+    \textbf{Distillation Results}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item Distilled student reaches $\mathbf{0.8034\text{ DSC}}$ $[0.7617, 0.8430]$ (Median $\mathbf{0.8916}$, HD95 $\mathbf{26.44\text{ px}}$).
+      \item \textbf{Outperforms the Teacher ($0.8012$)} with $11.4\times$ fewer parameters.
+    \end{itemize}
   \end{column}
 
-  \begin{column}{0.46\textwidth}
+  \begin{column}{0.45\textwidth}
     \centering
-    \includegraphics[width=0.98\textwidth,height=0.38\textheight,keepaspectratio]{../figures/distil_quant_main_comparison.png}
-    \vspace{-0.3em}
-    \begin{alertblock}{\textbf{Distil-Quant Reality Check}}
-      \scriptsize Naive INT8 quantization of distilled weights still drops to \textbf{0.4450 DSC}. Distillation alone cannot eliminate depthwise clipping without mixed precision!
-    \end{alertblock}
+    
+
+    \vspace{0.6em}
+    \raggedright
+    \textbf{Post-Distillation Quantization}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item Naive INT8 quantization of the distilled student still collapses to $\mathbf{0.4450\text{ DSC}}$.
+      \item Distillation boosts baseline capacity, but mixed precision is still required to prevent depthwise clipping.
+    \end{itemize}
   \end{column}
 \end{columns}
 \end{frame}
+
+\begin{frame}{Knowledge Distilation}
+ \includegraphics[width=\textwidth]{figures/distil_quant_main_comparison.png}
+\end{frame}
+
+
+
+
 
 % ==============================================================================
 % SLIDE 7: Systems & Operator Profiling Deep-Dive (Speaker B)
 % ==============================================================================
-\begin{frame}{Systems Profiling: Operator Breakdown \& Latency Bottlenecks}
-\begin{columns}[T]
-  \begin{column}{0.48\textwidth}
+% ==============================================================================
+% SLIDE: Systems Profiling: Operator Breakdown & Latency Bottlenecks
+% ==============================================================================
+\begin{frame}{Profiling: Operator Breakdown \& Latency Bottlenecks}
+\begin{columns}[T, onlytextwidth]
+  \begin{column}{0.57\textwidth}
     \centering
-    \includegraphics[width=0.98\textwidth,height=0.55\textheight,keepaspectratio]{../figures/study_s2_operator_breakdown.png}\\
-    \tiny\textcolor{MedSlate}{\textbf{Mini-Study S2:} Execution time distribution by ONNX operator category.}
+    \includegraphics[width=0.98\textwidth]{figures/study_s2_operator_breakdown.png}\\
+    \vspace{0.2em}
+    \scriptsize\textcolor{black}{Execution time distribution by ONNX operator category.}
   \end{column}
 
-  \begin{column}{0.50\textwidth}
-    \textbf{\footnotesize Systems Telemetry Insights (Mini-Study S2):}
-    \vspace{0.1em}
-    \begin{itemize}\setlength{\itemsep}{1pt}\scriptsize
-      \item In standard INT8 networks, GEMM/Convolutions are expected to dominate runtime.
-      \item \textbf{The QDQ Bottleneck:} In Naive INT8 MobileNetV3, \textbf{QuantizeLinear and DequantizeLinear nodes consumed 26.6\% of total runtime}!
-      \item Memory bandwidth and frequent casting between INT8 and FP32 negate integer MAC gains on lightweight architectures.
+  \begin{column}{0.43\textwidth}
+    \textbf{Systems Telemetry}
+    \begin{itemize}\setlength{\itemsep}{2pt}\footnotesize
+      \item In standard INT8 networks, GEMM and convolution ops typically dominate runtime.
+      \item \textbf{The QDQ Bottleneck:} In Naive INT8 MobileNetV3, \texttt{QuantizeLinear} and \texttt{DequantizeLinear} nodes consume $\mathbf{26.6\%}$ of total execution time.
+      \item Frequent FP32$\leftrightarrow$INT8 casting and memory bandwidth overhead erase integer MAC gains in lightweight architectures.
     \end{itemize}
 
-    \vspace{0.2em}
-    \begin{exampleblock}{\textbf{Why Rescued Mixed is Faster than Naive INT8}}
-      \scriptsize
-      \begin{itemize}\setlength{\itemsep}{1pt}
-        \item By pruning QDQ nodes around the 13 most fragile layers, \textbf{QDQ overhead drops to 14.6\%}.
-        \item Eliminating unnecessary boundary conversions allows Rescued Mixed (\textbf{23.31 ms}) to run faster than Naive INT8 (\textbf{26.68 ms})!
-      \end{itemize}
-    \end{exampleblock}
+    \vspace{0.4em}
+
+    \textbf{Why Mixed Precision Runs Faster}
+    \begin{itemize}\setlength{\itemsep}{2pt}\footnotesize
+      \item Pruning QDQ nodes around the 13 sensitive layers cuts QDQ overhead from $26.6\%$ down to $\mathbf{14.6\%}$.
+      \item Removing redundant boundary conversions makes Rescued Mixed ($\mathbf{23.31\text{ ms}}$) faster than Naive INT8 ($\mathbf{26.68\text{ ms}}$).
+    \end{itemize}
   \end{column}
 \end{columns}
 \end{frame}
-
 % ==============================================================================
 % SLIDE 8: Master Quantitative Results & Pareto Frontier (Speaker C)
 % ==============================================================================
-\begin{frame}{Master Quantitative Results: Held-Out BUSI Test Evaluation}
-\vspace{-0.5em}
-\begin{table}[h]
+% ==============================================================================
+% SLIDE: Quantitative Results: Held-Out BUSI Test Set
+% ==============================================================================
+% =====================================================================
+% Slide 1: Expanded Quantitative Results Table
+% =====================================================================
+\begin{frame}{Quantitative Results: Held-Out BUSI Test Set}
 \centering
-\fontsize{6pt}{7pt}\selectfont
-\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.35}
+\setlength{\tabcolsep}{4pt}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccccc}
 \toprule
-\textbf{Model \& Precision Variant} & \textbf{Params} & \textbf{Size (MB)} & \textbf{Latency} & \textbf{FPS} & \textbf{Mean DSC [95\% CI]} & \textbf{HD95 (px)} \\
+\textbf{Model Variant} & \textbf{Params} & \textbf{\begin{tabular}{@{}c@{}}Size\\(MB)\end{tabular}} & \textbf{\begin{tabular}{@{}c@{}}Latency\\(ms)\end{tabular}} & \textbf{FPS} & \textbf{Mean DSC [95\% CI]} & \textbf{\begin{tabular}{@{}c@{}}HD95\\(px)\end{tabular}} \\
 \midrule
-ResNet-34 FP32 (Teacher) & 24.44M & 93.22 & 74.0 ms & 13.5 & 0.8012 [0.7535, 0.8457] & 27.71 \\
-\textbf{ResNet-34 Static INT8 (Ours)} & 24.44M & \textbf{23.59} & 66.0 ms & 15.2 & \textbf{0.8003} [0.7515, 0.8462] & 28.56 \\
-MobileNetV3 FP32 (Edge Baseline) & 2.15M & 8.23 & 23.3 ms & 42.9 & 0.7659 [0.7123, 0.8163] & 35.13 \\
-MobileNetV3 Static INT8 (Naive) & 2.15M & 2.39 & 26.7 ms & 37.5 & 0.4355 [0.3612, 0.5002] & 86.97 \\
-\textbf{MobileNetV3 Rescued Mixed ($k^*=13$)} & 2.15M & \textbf{2.50} & \textbf{23.3 ms} & \textbf{42.9} & \textbf{0.7263} [0.6690, 0.7784] & \textbf{35.20} \\
-\textbf{MobileNetV3 Distilled FP32 (Ours)} & \textbf{2.15M} & \textbf{8.23} & \textbf{28.9 ms} & \textbf{34.9} & \textbf{0.8034} [0.7617, 0.8430] & \textbf{26.44} \\
-MobileNetV3 Distilled INT8 (Naive) & 2.15M & 2.39 & 33.8 ms & 29.7 & 0.4450 [0.3810, 0.5080] & 82.64 \\
+ResNet-34 FP32 (Teacher) & 24.44M & 93.22 & 74.0 & 13.5 & 0.8012 [0.7535, 0.8457] & 27.71 \\
+\textbf{ResNet-34 Static INT8} & 24.44M & \textbf{23.59} & 66.0 & 15.2 & \textbf{0.8003} [0.7515, 0.8462] & 28.56 \\
+\midrule
+MobileNetV3 FP32 (Baseline) & 2.15M & 8.23 & 23.3 & 42.9 & 0.7659 [0.7123, 0.8163] & 35.13 \\
+MobileNetV3 Static INT8 & 2.15M & 2.39 & 26.7 & 37.5 & 0.4355 [0.3612, 0.5002] & 86.97 \\
+\textbf{MobileNetV3 Mixed ($k^*=13$)} & 2.15M & \textbf{2.50} & \textbf{23.3} & \textbf{42.9} & \textbf{0.7263} [0.6690, 0.7784] & \textbf{35.20} \\
+\midrule
+\textbf{MobileNetV3 Distilled FP32} & 2.15M & \textbf{8.23} & \textbf{28.9} & \textbf{34.9} & \textbf{0.8034} [0.7617, 0.8430] & \textbf{26.44} \\
+MobileNetV3 Distilled INT8 & 2.15M & 2.39 & 33.8 & 29.7 & 0.4450 [0.3810, 0.5080] & 82.64 \\
 \bottomrule
-\end{tabular}
-\end{table}
+\end{tabular}%
+}
 
-\vspace{-0.4em}
-\begin{columns}[T]
-  \begin{column}{0.48\textwidth}
+\vspace{0.8em}
+\raggedright\scriptsize\textit{Note:} Bold rows indicate optimal configurations balancing segmentation accuracy (DSC, HD95) and edge deployment efficiency.
+\end{frame}
+
+% =====================================================================
+% Slide 2: Expanded Pareto Plot & Key Takeaways
+% =====================================================================
+\begin{frame}{Optimal Operating Points}
+\begin{columns}[c, onlytextwidth]
+  \begin{column}{0.6\textwidth}
     \centering
-    \includegraphics[width=0.98\textwidth,height=0.42\textheight,keepaspectratio]{../figures/pareto_dice_vs_latency.png}
+    \includegraphics[width=\textwidth]{figures/pareto_dice_vs_latency.png}
   \end{column}
 
-  \begin{column}{0.50\textwidth}
-    \vspace{0.1em}
-    \textbf{\scriptsize Three Optimal Operating Modes on the Frontier:}
-    \begin{enumerate}\setlength{\itemsep}{1pt}\scriptsize
-      \item \textbf{Lossless Diagnostic Quality:} ResNet-34 INT8 (0.8003 DSC, 23.6 MB, 15.2 FPS).
-      \item \textbf{Peak Lightweight Accuracy:} MobileNetV3 Distilled (0.8034 DSC, 8.23 MB, 34.9 FPS).
-      \item \textbf{Ultra-Compact Edge Streaming:} MobileNetV3 Rescued Mixed (0.7263 DSC, 2.50 MB, 42.9 FPS).
-    \end{enumerate}
+  \begin{column}{0.4\textwidth}
+    \textbf{Key Efficiency--Accuracy Trade-Offs}
+    \vspace{0.6em}
+    \begin{itemize}\setlength{\itemsep}{10pt}\small
+      \item \textbf{ResNet-34 INT8:} Lossless $3.95\times$ compression ($0.8003\text{ DSC}$, $23.6\text{ MB}$, $15.2\text{ FPS}$).
+      \item \textbf{MobileNetV3 Distilled FP32:} Highest overall accuracy ($0.8034\text{ DSC}$, $8.23\text{ MB}$, $34.9\text{ FPS}$).
+      \item \textbf{MobileNetV3 Mixed ($k^*=13$):} Fastest sub-$3\text{ MB}$ edge model ($0.7263\text{ DSC}$, $2.50\text{ MB}$, $42.9\text{ FPS}$).
+    \end{itemize}
   \end{column}
 \end{columns}
 \end{frame}
-
 % ==============================================================================
 % SLIDE 9: Literature Benchmark & Cross-Center Generalization (Speaker C)
 % ==============================================================================
+% ==============================================================================
+% SLIDE: Literature Benchmark & Cross-Center Generalisation
+% ==============================================================================
 \begin{frame}{Literature Benchmark \& Cross-Center Generalization}
-\begin{columns}[T]
-  \begin{column}{0.50\textwidth}
-    \textbf{\scriptsize Comparison with Published State-of-the-Art:}
-    \vspace{0.1em}
+\begin{columns}[T, onlytextwidth]
+  \begin{column}{0.52\textwidth}
+    \textbf{Comparison with Published Baselines}
+    \vspace{-0.3em}
     \begin{table}[h]
     \centering
-    \fontsize{5.5pt}{6.5pt}\selectfont
-    \setlength{\tabcolsep}{2.5pt}
+    \fontsize{6.5pt}{8pt}\selectfont
+    \setlength{\tabcolsep}{3pt}
+    \renewcommand{\arraystretch}{1.1}
     \begin{tabular}{lcccc}
     \toprule
-    \textbf{Model / Architecture} & \textbf{Params} & \textbf{Test DSC} & \textbf{Test IoU} & \textbf{Throughput} \\
+    \textbf{Model} & \textbf{Params} & \textbf{DSC} & \textbf{IoU} & \textbf{FPS} \\
     \midrule
-    Shifaa U-Net (HuggingFace) & 1.94M & 0.4973 & 0.3673 & 17.3 FPS \\
-    Attention U-Net (Yap et al.) & 24.55M & 0.7412 & 0.6385 & 7.1 FPS \\
-    U-Net++ (Al-Dhabyani et al.) & 26.08M & 0.7588 & 0.6542 & 4.0 FPS \\
+    Shifaa U-Net (HF) & 1.94M & 0.4973 & 0.3673 & 17.3 \\
+    Attention U-Net & 24.55M & 0.7412 & 0.6385 & 7.1 \\
+    U-Net++ & 26.08M & 0.7588 & 0.6542 & 4.0 \\
     \midrule
-    \textbf{Our ResNet-34 INT8} & 24.44M & \textbf{0.8003} & \textbf{0.7187} & \textbf{15.2 FPS} \\
-    \textbf{Our MobileNetV3 FP32} & \textbf{2.15M} & \textbf{0.7659} & \textbf{0.6770} & \textbf{42.9 FPS} \\
-    \textbf{Our MobileNetV3 Distilled} & \textbf{2.15M} & \textbf{0.8034} & \textbf{0.7042} & \textbf{34.9 FPS} \\
-    \textbf{Our MobileNetV3 Rescued} & \textbf{2.15M} & \textbf{0.7263} & \textbf{0.6314} & \textbf{42.9 FPS} \\
+    \textbf{ResNet-34 INT8 (Ours)} & 24.44M & 0.8003 & \textbf{0.7187} & 15.2 \\
+    \textbf{MobileNetV3 FP32 (Ours)} & 2.15M & 0.7659 & 0.6770 & \textbf{42.9} \\
+    \textbf{MobileNetV3 Distilled} & \textbf{2.15M} & \textbf{0.8034} & 0.7042 & 34.9 \\
+    \textbf{MobileNetV3 Mixed ($k^*=13$)} & \textbf{2.15M} & 0.7263 & 0.6314 & \textbf{42.9} \\
     \bottomrule
     \end{tabular}
     \end{table}
 
-    \vspace{-0.3em}
-    \begin{block}{\textbf{Cross-Center Zero-Shot Generalization}}
-      \scriptsize Tested on \textbf{UDIAT Dataset B (Sabadell, Spain; 163 scans)}:
-      \begin{itemize}\setlength{\itemsep}{0pt}\scriptsize
-        \item \textbf{ResNet-34 INT8:} Achieves \textbf{0.7928 DSC} (exceeds FP32 0.7902; fine-tuned hits \textbf{0.8283}).
-        \item \textbf{MobileNetV3 Rescued:} Sustains \textbf{0.7002 DSC} (Median \textbf{0.8562}) vs Naive INT8 collapse (0.1519).
-      \end{itemize}
-    \end{block}
+    \vspace{0.2em}
+
+    \textbf{Zero-Shot Generalisation (UDIAT Dataset B, 163 Scans)}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item \textbf{ResNet-34 INT8:} $\mathbf{0.7928\text{ DSC}}$ zero-shot (beats FP32 at $0.7902$; reaches $\mathbf{0.8283}$ when fine-tuned).
+      \item \textbf{MobileNetV3 Mixed ($k^*=13$):} Retains $\mathbf{0.7002\text{ DSC}}$ (Median $\mathbf{0.8562}$) vs.\ Naive INT8 collapse ($0.1519$).
+    \end{itemize}
   \end{column}
 
-  \begin{column}{0.48\textwidth}
+  \begin{column}{0.45\textwidth}
     \centering
-    \includegraphics[width=0.98\textwidth,height=0.60\textheight,keepaspectratio]{../figures/benchmark_overlay_comparison.png}\\
-    \tiny\textcolor{MedSlate}{\textbf{Qualitative Overlays:} Shifaa U-Net vs Ours across 4 test cases.}
+    \includegraphics[width=0.98\textwidth]{figures/benchmark_overlay_comparison.png}\\
+    \vspace{0.2em}
+    \scriptsize\textcolor{black}{\textbf{Qualitative Overlays:} Shifaa U-Net vs.\ our models across 4 test cases.}
   \end{column}
 \end{columns}
 \end{frame}
-
 % ==============================================================================
 % SLIDE 10: Extension B: Cine Streaming & Temporal Smoothing (Speaker C)
 % ==============================================================================
-\begin{frame}{Extension B: Real-Time Cine-Loop Streaming \& Temporal Filtering}
-\begin{columns}[T]
-  \begin{column}{0.50\textwidth}
-    \textbf{\footnotesize Multi-Threaded Producer-Consumer Architecture:}
-    \vspace{0.1em}
-    \begin{itemize}\setlength{\itemsep}{1pt}\scriptsize
-      \item Sonographers sweep probes continuously at 30 Hz.
-      \item \textbf{Lock-Free Ring Buffer ($C = 4$):} Implements drop-oldest semantics; guarantees frame staleness $\le 33.3$ ms.
-      \item \textbf{Benchmark Results at 30 Hz Stream Rate:}
-        \begin{itemize}\setlength{\itemsep}{0pt}\scriptsize
-          \item MobileNetV3 FP32 \& Rescued: \textbf{0.02\%--0.06\% drops} ($\sim$29 ms e2e).
-          \item ResNet-34 INT8 \& FP32: \textbf{56.3\% to 61.9\% frame drops} (cannot sustain live feeds).
-        \end{itemize}
-    \end{itemize}
+% ==============================================================================
+% SLIDE: Extension B: Real-Time Cine-Loop Streaming & Temporal Filtering
+% ==============================================================================
+\begin{frame}{Real-Time Cine-Loop Streaming \& Temporal Filtering}
 
-    \vspace{-0.2em}
-    \begin{block}{\textbf{Temporal EMA Logit Smoothing ($\alpha = 0.60$)}}
-      \scriptsize
-      $$Z_t^{\text{EMA}} = \alpha Z_t + (1-\alpha) Z_{t-1}^{\text{EMA}}$$
-      Evaluated on genuine clinical videos (UFUV MICCAI cohort):
-      \begin{itemize}\setlength{\itemsep}{0pt}\scriptsize
-        \item Eliminates high-frequency boundary flicker.
-        \item Boosts Temporal Consistency Index (TCI) by \textbf{+18.5\% to +65.2\%} (mean \textbf{+37.7\%}).
-      \end{itemize}
-    \end{block}
+% --- Top: Wide Horizontal Figure ---
+\begin{center}
+  \includegraphics[width=\textwidth,height=0.38\textheight,keepaspectratio]{figures/extB_drop_rate_vs_rate.png}\\
+  % \vspace{0.1em}
+  \scriptsize\textcolor{black}{\textbf{Streaming Telemetry:} Frame drop rate vs.\ input stream rate. MobileNetV3 sustains $30\text{ Hz}$ with $<0.1\%$ drops.}
+\end{center}
+
+\vspace{-0.6em}
+
+% --- Bottom: Two-Column Breakdown ---
+\begin{columns}[T, onlytextwidth]
+  \begin{column}{0.48\textwidth}
+    \textbf{Producer-Consumer Pipeline}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item \textbf{Lock-Free Ring Buffer ($C = 4$):} Drop-oldest policy bounds frame staleness to $\le 33.3\text{ ms}$ during $30\text{ Hz}$ sweeps.
+      \item \textbf{MobileNetV3 (FP32 \& Mixed):} $\mathbf{0.02\%\text{--}0.06\%}$ frame drops ($\sim 29\text{ ms}$ end-to-end).
+      \item \textbf{ResNet-34 (FP32 \& INT8):} Drops $\mathbf{56.3\%\text{--}61.9\%}$ of frames; fails live streaming.
+    \end{itemize}
   \end{column}
 
   \begin{column}{0.48\textwidth}
-    \centering
-    \includegraphics[width=0.98\textwidth,height=0.55\textheight,keepaspectratio]{../figures/extB_drop_rate_vs_rate.png}\\
-    \tiny\textcolor{MedSlate}{Frame drop rates vs input stream rate: MobileNetV3 sustains 30 Hz with $<0.1\%$ drop.}
+    \textbf{Temporal EMA Logit Smoothing ($\alpha = 0.60$)}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item Filters inter-frame mask jitter before thresholding:
+        $$\textstyle Z_t^{\text{EMA}} = \alpha Z_t + (1-\alpha) Z_{t-1}^{\text{EMA}}$$
+      \item Tested on clinical cine-loops (UFUV MICCAI).
+      \item Suppresses boundary flicker and boosts Temporal Consistency Index by $\mathbf{+37.7\%}$ on average ($+18.5\%\text{ to }+65.2\%$).
+    \end{itemize}
   \end{column}
 \end{columns}
+
 \end{frame}
+
 
 % ==============================================================================
 % SLIDE 11: In-Browser WebGPU/WASM WebViewer (Speaker A)
 % ==============================================================================
+% ==============================================================================
+% SLIDE: In-Browser WebGPU / WASM Edge WebViewer
+% ==============================================================================
 \begin{frame}{In-Browser WebGPU / WASM Edge WebViewer}
-\begin{columns}[T]
-  \begin{column}{0.54\textwidth}
-    \textbf{\footnotesize Zero-Install Client-Side Diagnostic Hub:}
-    \vspace{0.1em}
-    \begin{itemize}\setlength{\itemsep}{1pt}\scriptsize
-      \item Built with \textbf{ONNX Runtime Web} for immediate clinical deployment.
-      \item \textbf{Dual Hardware Execution Pipeline:}
-        \begin{enumerate}\setlength{\itemsep}{0pt}\scriptsize
-          \item \textbf{WebGPU Engine:} Direct shader dispatch to client GPU for sub-25 ms inference.
-          \item \textbf{WebAssembly (WASM SIMD):} 4-threaded CPU fallback for legacy hospital tablets.
-        \end{enumerate}
-      \item \textbf{Embedded Model:} Loads our 2.50 MB Rescued Mixed model directly in memory.
+\begin{columns}[T, onlytextwidth]
+  \begin{column}{0.52\textwidth}
+    \textbf{Zero-Install Client-Side Execution}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item Built on \textbf{ONNX Runtime Web} for browser-based clinical deployment.
+      \item \textbf{WebGPU Backend:} Direct shader dispatch to client GPU for $<25\text{ ms}$ inference.
+      \item \textbf{WASM SIMD Fallback:} 4-threaded CPU execution for legacy hospital tablets.
+      \item \textbf{In-Memory Weights:} Loads the $2.50\text{ MB}$ Mixed ($k^*=13$) model directly into browser cache.
     \end{itemize}
 
-    \vspace{0.2em}
-    \begin{block}{\textbf{Clinical Telemetry HUD \& 100\% Privacy}}
-      \scriptsize
-      \begin{itemize}\setlength{\itemsep}{0pt}
-        \item Interactive thresholding $\tau \in [0.05, 0.95]$, contours, bounding box.
-        \item \textbf{100\% Data Privacy:} No patient scan ever leaves the local machine.
-      \end{itemize}
-    \end{block}
+    \vspace{0.6em}
+
+    \textbf{Telemetry HUD \& Local Privacy}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item Real-time threshold adjustment ($\tau \in [0.05, 0.95]$), contour overlays, and bounding boxes.
+      \item All B-mode frames and cine-loops remain strictly on the client device.
+    \end{itemize}
   \end{column}
 
-  \begin{column}{0.44\textwidth}
+  \begin{column}{0.45\textwidth}
     \begin{center}
-      \begin{tikzpicture}[scale=0.62]
-        \draw[fill=MedNavy!10, rounded corners=6pt] (0, 0) rectangle (5.5, 3.6);
-        \node[text=MedNavy, font=\bfseries\tiny] at (2.75, 3.3) {Browser Inference Engine};
-        \draw[fill=white, rounded corners=4pt] (0.4, 2.3) rectangle (5.1, 2.9);
-        \node[font=\tiny] at (2.75, 2.6) {B-Mode Ultrasound Upload / Cine};
-        \draw[->, thick, MedBlue] (2.75, 2.3) -- (2.75, 1.8);
-        \draw[fill=MedBlue!20, rounded corners=4pt] (0.4, 1.2) rectangle (5.1, 1.8);
-        \node[font=\tiny\bfseries] at (2.75, 1.5) {ORT Web (WebGPU / WASM)};
-        \draw[->, thick, MedBlue] (2.75, 1.2) -- (2.75, 0.7);
-        \draw[fill=MedGreen!20, rounded corners=4pt] (0.4, 0.1) rectangle (5.1, 0.7);
-        \node[font=\tiny\bfseries] at (2.75, 0.4) {2.50 MB ONNX $\to$ 42 FPS Mask HUD};
+      \vspace{0.2em}
+      \begin{tikzpicture}[x=1cm, y=1cm]
+        % Outer Container (generous top/bottom/side padding)
+        \node[text=black, font=\bfseries\scriptsize] at (2.7, 3.95) {Browser Inference Pipeline};
+
+        % Node 1: Input
+        % \draw[draw=MedNavy!30, fill=white, rounded corners=4pt] (0.35, 2.85) rectangle (5.05, 3.50);
+        \node[font=\scriptsize] at (2.7, 3.175) {B-Mode Ultrasound / Cine Stream};
+
+        % Arrow 1 -> 2
+        \draw[->, >=stealth, black] (2.7, 3) -- (2.7, 2.5);
+
+        % Node 2: Runtime
+        \node[font=\scriptsize] at (2.69, 2.16) {ORT Web (WebGPU / WASM SIMD)};
+
+        % Arrow 2 -> 3
+        \draw[->, >=stealth, black] (2.7, 1.9) -- (2.7, 1.4);
+
+        % Node 3: Output
+        \node[font=\scriptsize] at (2.69, 1.19) {2.50 MB ONNX $\to$ 42 FPS Mask HUD};
+        \draw[rounded corners=3.6pt] (0.2,3.4) rectangle (5.19,3);
+        \draw[rounded corners=3.6pt] (0.2,2.4) rectangle (5.19,1.94);
+        \draw[rounded corners=3.6pt] (0.19,1.4) rectangle (5.19,0.92);
+        \draw[rounded corners=3.6pt] (-0.2,4.4) rectangle (5.6,0.6);
       \end{tikzpicture}
     \end{center}
-    \vspace{-0.3em}
-    \begin{exampleblock}{\textbf{Verified Browser Latency}}
-      \scriptsize Measured end-to-end browser inference: \textbf{22.4 ms} on WebGPU; \textbf{31.8 ms} on 4-thread WASM SIMD.
-    \end{exampleblock}
+
+    \vspace{0.3em}
+
+    \textbf{Verified End-to-End Browser Latency}
+    \begin{itemize}\setlength{\itemsep}{3pt}\footnotesize
+      \item \textbf{WebGPU:} $\mathbf{22.4\text{ ms}}$ per frame ($44.6\text{ FPS}$).
+      \item \textbf{WASM SIMD (4 threads):} $\mathbf{31.8\text{ ms}}$ per frame ($31.4\text{ FPS}$).
+    \end{itemize}
   \end{column}
 \end{columns}
 \end{frame}
 
 % ==============================================================================
 % SLIDE 12: Summary, Clinical Limitations & Conclusion (Speaker C)
+% ==============================================================================% ==============================================================================
+% SLIDE: Contributions, Clinical Limitations & Summary
 % ==============================================================================
-\begin{frame}{Contributions, Clinical Limitations \& Summary}
-\begin{columns}[T]
+\begin{frame}{Contributions, Limitations \& Summary}
+\begin{columns}[T, onlytextwidth]
   \begin{column}{0.48\textwidth}
-    \begin{block}{\textbf{Summary of Key Contributions}}
-      \scriptsize
-      \begin{enumerate}\setlength{\itemsep}{1pt}
-        \item \textbf{Lossless INT8 on Heavy Backbones:} ResNet-34 INT8 cuts size by 4$\times$ (23.6 MB) with 0.8003 DSC.
-        \item \textbf{Quantization Graph Surgery:} Solved depthwise collapse via zero-recomputation knob ($k^*=13$), reaching 0.7263 DSC at 2.50 MB.
-        \item \textbf{Distillation Breakthrough:} MobileNetV3 Distilled hits \textbf{0.8034 DSC}, beating the heavy teacher with 11.4$\times$ fewer weights.
-        \item \textbf{Real-Time POCUS Pipeline:} Full 30 Hz streaming with EMA temporal stabilization and WebViewer.
-      \end{enumerate}
-    \end{block}
+    \textbf{Contributions}
+    \begin{enumerate}\setlength{\itemsep}{4pt}\footnotesize
+      \item \textbf{Lossless Heavyweight INT8:} Compresses ResNet-34 by $3.95\times$ ($23.6\text{ MB}$) while retaining $\mathbf{0.8003\text{ DSC}}$.
+      \item \textbf{Mixed-Precision Model:} Prevents depthwise INT8 collapse via our zero-recomputation knob ($k^*=13$), achieving $\mathbf{0.7263\text{ DSC}}$ at $\mathbf{2.50\text{ MB}}$ and $\mathbf{42.9\text{ FPS}}$.
+      \item \textbf{Knowledge Distillation:} Boosts MobileNetV3 to $\mathbf{0.8034\text{ DSC}}$, outperforming the teacher with $11.4\times$ fewer parameters.
+      \item \textbf{End-to-End Edge Pipeline:} Delivers $30\text{ Hz}$ lock-free streaming, EMA temporal smoothing ($+37.7\%$ TCI), and zero-install WebGPU/WASM inference.
+    \end{enumerate}
   \end{column}
 
   \begin{column}{0.48\textwidth}
-    \begin{alertblock}{\textbf{Honest Clinical Limitations}}
-      \scriptsize
-      \begin{itemize}\setlength{\itemsep}{1pt}
-        \item \textbf{Acoustic Shadowing:} Posterior acoustic shadows beneath dense fibrous tissue cause false negatives.
-        \item \textbf{Out-of-Plane Probe Motion:} Rapid transducer tilting induces discontinuous 2D anatomical shifts that challenge 2D temporal filters.
-        \item \textbf{Calibration Outliers:} Extreme gain adjustments on legacy ultrasound machines distort activation calibration scales.
-      \end{itemize}
-    \end{alertblock}
-    \vspace{0.4em}
-    \begin{center}
-      \textbf{\textcolor{MedNavy}{\large Thank you! We welcome your questions.}}
-    \end{center}
+    \textbf{Clinical \& Technical Limitations}
+    \begin{itemize}\setlength{\itemsep}{4pt}\footnotesize
+      \item \textbf{Acoustic Shadowing:} Dense fibrous tissue casts posterior shadows that obscure lower lesion boundaries and trigger false negatives.
+      \item \textbf{Out-of-Plane Motion:} Rapid transducer tilting causes abrupt 2D slice shifts that outpace 2D temporal EMA filtering.
+      \item \textbf{Gain Sensitivity:} Extreme time-gain compensation (TGC) shifts on legacy scanners can skew static INT8 activation scales.
+    \end{itemize}
   \end{column}
 \end{columns}
+
+\vspace{1.2em}
+\hrule height 0.4pt
+\vspace{0.8em}
+
+\begin{center}
+  \textbf{\textcolor{MedNavy}{\large Thank you! }}
+\end{center}
 \end{frame}
 
 \end{document}

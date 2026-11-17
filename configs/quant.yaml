@@ -19,5 +19,5 @@ methods:
 
 extA:
   intermediate_calib_samples: 24
-  k_grid: [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 13]
+  k_grid: [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 13, 14, 15, 16, 17, 18]
   recovery_threshold: 0.90

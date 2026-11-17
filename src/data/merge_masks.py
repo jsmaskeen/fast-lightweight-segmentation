@@ -377,7 +377,7 @@ def generate_qa_overlays(
 
         # Label info
         label = f"{r['id']} [{r['class']}] m={r['num_raw_masks']}"
-        cv2.putText(overlay, label, (8, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.42, (0, 255, 255), 1, cv2.LINE_AA)
+        cv2.putText(overlay, label, (8, 24), cv2.FONT_HERSHEY_SIMPLEX, 0.63, (0, 255, 255), 2, cv2.LINE_AA)
 
         out_qa_file = qa_dir / f"qa_{idx:02d}_{r['id']}.png"
         cv2.imwrite(str(out_qa_file), overlay)

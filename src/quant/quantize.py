@@ -91,7 +91,7 @@ def quantize_model(
 
     # Record checksum
     checksums_file = Path("models/checksums.txt")
-    if checksums_file.parent.exists() and output_dir.resolve() == Path("models/int8").resolve():
+    if checksums_file.parent.exists() and output_path.parent.resolve() == Path("models/int8").resolve():
         with open(output_path, "rb") as f:
             h = hashlib.sha256(f.read()).hexdigest()
         with open(checksums_file, "a") as f:

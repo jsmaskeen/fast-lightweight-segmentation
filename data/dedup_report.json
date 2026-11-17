@@ -8,9 +8,9 @@
   },
   "dropped_duplicates": [
     "malignant (94)",
-    "malignant (145)",
+    "malignant (52)",
     "malignant (51)",
-    "malignant (52)"
+    "malignant (145)"
   ],
   "clean_counts": {
     "benign": 437,

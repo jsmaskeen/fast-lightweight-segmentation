@@ -86,17 +86,17 @@ def generate_benchmark_overlay_plot():
         "Raw B-Mode Scan",
         "Ground Truth",
         "Shifaa U-Net\n(Online HF)",
-        "Our ResNet-34\n(FP32 Baseline)",
-        "Our ResNet-34\n(Static INT8 QDQ)",
-        "Our MobileNetV3\n(FP32 Baseline)",
-        "Our MobileNetV3 v1\n(Naive INT8 / Harsh)",
-        "Our MobileNetV3 v2\n(Rescued Mixed)",
+        "Our ResNet-34\n(FP32)",
+        "Our ResNet-34\n(INT8 QDQ)",
+        "Our MobileNetV3\n(FP32)",
+        "MobileNetV3 v1\n(Naive INT8)",
+        "MobileNetV3 v2\n(Rescued Mixed)",
     ]
 
     n_rows = len(selected_ids)
     n_cols = len(cols)
 
-    fig, axes = plt.subplots(n_rows, n_cols, figsize=(20, 10.5), gridspec_kw={"wspace": 0.04, "hspace": 0.12})
+    fig, axes = plt.subplots(n_rows, n_cols, figsize=(26, 14), gridspec_kw={"wspace": 0.08, "hspace": 0.22})
 
     for row_idx, case_id in enumerate(selected_ids):
         img_p = Path(f"data/processed/images/{case_id}.png")
@@ -186,21 +186,21 @@ def generate_benchmark_overlay_plot():
 
             # Header on top row
             if row_idx == 0:
-                ax.set_title(cols[col_idx], fontsize=10.5, fontweight="bold", pad=8)
+                ax.set_title(cols[col_idx], fontsize=14.5, fontweight="bold", pad=10)
 
             # Subtitle / DSC label on bottom
             if dsc_lbl is not None:
                 color = "green" if "✓" in dsc_lbl or "GT" in dsc_lbl else ("red" if "⚠" in dsc_lbl else "navy")
-                ax.set_xlabel(dsc_lbl, fontsize=9.5, fontweight="semibold", color=color, labelpad=4)
+                ax.set_xlabel(dsc_lbl, fontsize=14.5, fontweight="semibold", color=color, labelpad=6)
 
             # Y-axis label on leftmost column
             if col_idx == 0:
-                ax.set_ylabel(case_title, fontsize=10, fontweight="bold", labelpad=6)
+                ax.set_ylabel(case_title, fontsize=15, fontweight="bold", labelpad=8)
 
     plt.suptitle(
         "Breast Ultrasound Tumor Segmentation: Comprehensive Visual Benchmark Comparison\n"
         "(Held-out BUSI Test Set Scans: Community Open Pretrained vs. Literature Baselines vs. Our FP32, INT8 & Rescued Mixed Models)",
-        fontsize=13.5,
+        fontsize=20,
         fontweight="bold",
         y=0.99,
     )

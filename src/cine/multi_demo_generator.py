@@ -312,9 +312,9 @@ def generate_quantization_comparison_demo(
 
     frames_data = load_real_video_data(video_id, max_frames=num_frames)
 
-    tile_w, tile_h = 240, 180
-    canvas_w = tile_w * 4  # 960
-    canvas_h = tile_h * 2  # 360
+    tile_w, tile_h = 480, 360
+    canvas_w = tile_w * 4  # 1920 (720p HD widescreen)
+    canvas_h = tile_h * 2  # 720
 
     Path(output_mp4).parent.mkdir(parents=True, exist_ok=True)
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
@@ -356,25 +356,25 @@ def generate_quantization_comparison_demo(
         for r, c, title, sub, col, m_key, is_gt in panels:
             mask_to_draw = gt_mask if is_gt else preds[m_key]
             tile = draw_labeled_mask_overlay(
-                img_bgr=cv2.resize(raw_bgr, (tile_w, tile_h)),
+                img_bgr=cv2.resize(raw_bgr, (tile_w, tile_h), interpolation=cv2.INTER_AREA),
                 mask_bin=cv2.resize(mask_to_draw, (tile_w, tile_h), interpolation=cv2.INTER_NEAREST),
                 color=col,
                 alpha=0.45,
-                contour_thickness=2,
+                contour_thickness=3,
             )
-            cv2.rectangle(tile, (4, 4), (tile_w - 4, 34), (12, 12, 12), -1)
-            cv2.rectangle(tile, (4, 4), (tile_w - 4, 34), col, 1)
-            cv2.putText(tile, title, (8, 17), cv2.FONT_HERSHEY_SIMPLEX, 0.38, col, 1)
-            cv2.putText(tile, sub, (8, 29), cv2.FONT_HERSHEY_SIMPLEX, 0.30, (230, 230, 230), 1)
+            cv2.rectangle(tile, (6, 6), (tile_w - 6, 60), (12, 12, 12), -1)
+            cv2.rectangle(tile, (6, 6), (tile_w - 6, 60), col, 2)
+            cv2.putText(tile, title, (14, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.70, col, 2, cv2.LINE_AA)
+            cv2.putText(tile, sub, (14, 52), cv2.FONT_HERSHEY_SIMPLEX, 0.52, (235, 235, 235), 1, cv2.LINE_AA)
 
             canvas[r*tile_h:(r+1)*tile_h, c*tile_w:(c+1)*tile_w] = tile
 
         hud_tile = np.zeros((tile_h, tile_w, 3), dtype=np.uint8)
         hud_tile[:] = (20, 24, 28)
-        cv2.rectangle(hud_tile, (4, 4), (tile_w - 4, tile_h - 4), (60, 70, 80), 1)
+        cv2.rectangle(hud_tile, (6, 6), (tile_w - 6, tile_h - 6), (60, 70, 80), 2)
 
-        cv2.rectangle(hud_tile, (4, 4), (tile_w - 4, 28), (35, 45, 55), -1)
-        cv2.putText(hud_tile, f"LEADERBOARD: {video_id}", (8, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.38, (0, 230, 255), 1)
+        cv2.rectangle(hud_tile, (6, 6), (tile_w - 6, 52), (35, 45, 55), -1)
+        cv2.putText(hud_tile, f"LEADERBOARD: {video_id}", (14, 36), cv2.FONT_HERSHEY_SIMPLEX, 0.70, (0, 230, 255), 2, cv2.LINE_AA)
 
         rows = [
             ("r34 FP32", f"{dices['r34_fp32']:.3f}", "93MB", f"{lats['r34_fp32']:.0f}ms"),
@@ -385,22 +385,23 @@ def generate_quantization_comparison_demo(
             ("Cascade+EMA", f"{dices['cascade_ema']:.3f}", "Smart", f"{lats['cascade_ema']:.0f}ms"),
         ]
 
-        y_pos = 46
-        cv2.putText(hud_tile, "Model", (8, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.32, (150, 160, 170), 1)
-        cv2.putText(hud_tile, "Dice", (90, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.32, (150, 160, 170), 1)
-        cv2.putText(hud_tile, "Size", (140, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.32, (150, 160, 170), 1)
-        cv2.putText(hud_tile, "Speed", (190, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.32, (150, 160, 170), 1)
+        y_pos = 92
+        cv2.putText(hud_tile, "Model", (16, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.58, (150, 160, 170), 2, cv2.LINE_AA)
+        cv2.putText(hud_tile, "Dice", (175, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.58, (150, 160, 170), 2, cv2.LINE_AA)
+        cv2.putText(hud_tile, "Size", (275, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.58, (150, 160, 170), 2, cv2.LINE_AA)
+        cv2.putText(hud_tile, "Speed", (375, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.58, (150, 160, 170), 2, cv2.LINE_AA)
+        cv2.line(hud_tile, (12, 106), (tile_w - 12, 106), (50, 60, 70), 1)
 
-        y_pos += 18
+        y_pos = 142
         for m_name, d_str, sz_str, lat_str in rows:
             is_fail = lat_str == "FAIL"
             is_rescued = "Mixed" in m_name or "Cascade" in m_name
             text_col = (0, 80, 255) if is_fail else ((0, 255, 180) if is_rescued else (240, 240, 240))
-            cv2.putText(hud_tile, m_name, (8, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.30, text_col, 1)
-            cv2.putText(hud_tile, d_str, (90, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.30, text_col, 1)
-            cv2.putText(hud_tile, sz_str, (140, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.30, text_col, 1)
-            cv2.putText(hud_tile, lat_str, (190, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.30, text_col, 1)
-            y_pos += 18
+            cv2.putText(hud_tile, m_name, (16, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.55, text_col, 2, cv2.LINE_AA)
+            cv2.putText(hud_tile, d_str, (175, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.55, text_col, 2, cv2.LINE_AA)
+            cv2.putText(hud_tile, sz_str, (275, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.55, text_col, 2, cv2.LINE_AA)
+            cv2.putText(hud_tile, lat_str, (375, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.55, text_col, 2, cv2.LINE_AA)
+            y_pos += 36
 
         canvas[tile_h:2*tile_h, 3*tile_w:4*tile_w] = hud_tile
 

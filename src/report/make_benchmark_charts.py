@@ -51,8 +51,8 @@ def generate_model_size_latency_comparison():
         df = pd.DataFrame(models_data)
 
     plt.style.use("seaborn-v0_8-whitegrid" if "seaborn-v0_8-whitegrid" in plt.style.available else "default")
-    fig, axes = plt.subplots(2, 2, figsize=(16, 12))
-    plt.subplots_adjust(wspace=0.28, hspace=0.32)
+    fig, axes = plt.subplots(2, 2, figsize=(22, 16.5))
+    plt.subplots_adjust(wspace=0.38, hspace=0.36)
 
     # -------------------------------------------------------------
     # Subplot A: Model Disk Footprint (MB)
@@ -60,17 +60,22 @@ def generate_model_size_latency_comparison():
     ax_a = axes[0, 0]
     df_sorted_size = df.sort_values(by="size_mb", ascending=True)
     bars_a = ax_a.barh(df_sorted_size["name"], df_sorted_size["size_mb"], color=df_sorted_size["color"], height=0.62)
-    ax_a.set_xlabel("Model Disk Storage Footprint (MB)", fontsize=11, fontweight="bold")
-    ax_a.set_title("A: Model Storage Footprint & Compression", fontsize=12.5, fontweight="bold", pad=10)
-    for bar in bars_a:
+    ax_a.tick_params(axis="both", labelsize=13.5)
+    ax_a.set_xlabel("Model Disk Storage Footprint (MB)", fontsize=16.5, fontweight="bold")
+    ax_a.set_title("Model Storage Footprint & Compression", fontsize=18.5, fontweight="bold", pad=12)
+    for bar, (_, r) in zip(bars_a, df_sorted_size.iterrows()):
         val = bar.get_width()
         txt = f" {val:.2f} MB"
-        if val < 5:
-            txt += " (3.3x)"
-        elif val < 30:
-            txt += " (3.95x)"
-        ax_a.text(val, bar.get_y() + bar.get_height() / 2, txt, va="center", fontsize=9.5, fontweight="semibold")
-    ax_a.set_xlim(0, 125)
+        # Only append compression ratio to quantized/mixed models, never to uncompressed FP32 baselines
+        if "INT8" in r["prec"] or "Mixed" in r["prec"]:
+            if "ResNet-34" in r["name"]:
+                comp = 93.22 / val
+                txt += f" ({comp:.2f}x)"
+            elif "MobileNetV3" in r["name"]:
+                comp = 8.23 / val
+                txt += f" ({comp:.2f}x)"
+        ax_a.text(val + 1.2, bar.get_y() + bar.get_height() / 2, txt, va="center", fontsize=13.5, fontweight="semibold")
+    ax_a.set_xlim(0, 140)
 
     # -------------------------------------------------------------
     # Subplot B: Edge CPU Inference Latency (ms) & Throughput (FPS)
@@ -78,23 +83,25 @@ def generate_model_size_latency_comparison():
     ax_b = axes[0, 1]
     df_sorted_lat = df.sort_values(by="lat_ms", ascending=True)
     bars_b = ax_b.barh(df_sorted_lat["name"], df_sorted_lat["lat_ms"], color=df_sorted_lat["color"], height=0.62)
-    ax_b.axvline(33.33, color="green", linestyle="--", linewidth=1.5, label="30 FPS Streaming Barrier (33.3 ms)")
-    ax_b.axvline(100.0, color="crimson", linestyle=":", linewidth=1.5, label="Interactive Usability Ceiling (100 ms)")
-    ax_b.set_xlabel("Edge CPU Inference Latency (p50 ms)", fontsize=11, fontweight="bold")
-    ax_b.set_title("B: Edge CPU Latency & Real-Time Throughput", fontsize=12.5, fontweight="bold", pad=10)
+    ax_b.tick_params(axis="both", labelsize=13.5)
+    ax_b.axvline(33.33, color="green", linestyle="--", linewidth=1.8, label="30 FPS Streaming Barrier (33.3 ms)")
+    ax_b.axvline(100.0, color="crimson", linestyle=":", linewidth=1.8, label="Interactive Usability Ceiling (100 ms)")
+    ax_b.set_xlabel("Edge CPU Inference Latency (p50 ms)", fontsize=16.5, fontweight="bold")
+    ax_b.set_title("Edge CPU Latency & Real-Time Throughput", fontsize=18.5, fontweight="bold", pad=12)
     for bar in bars_b:
         val = bar.get_width()
         fps_val = 1000.0 / val
-        ax_b.text(val + 2, bar.get_y() + bar.get_height() / 2, f"{val:.1f} ms ({fps_val:.1f} FPS)", va="center", fontsize=9.2, fontweight="semibold")
-    ax_b.set_xlim(0, 225)
-    ax_b.legend(loc="lower right", fontsize=9.5, frameon=True)
+        ax_b.text(val + 2.5, bar.get_y() + bar.get_height() / 2, f"{val:.1f} ms ({fps_val:.1f} FPS)", va="center", fontsize=13.5, fontweight="semibold")
+    ax_b.set_xlim(0, 310)
+    ax_b.legend(loc="lower right", fontsize=13.5, frameon=True)
 
     # -------------------------------------------------------------
     # Subplot C: Pareto Frontier (Test Dice vs. CPU Latency, Bubble=Size)
     # -------------------------------------------------------------
     ax_c = axes[1, 0]
+    ax_c.tick_params(axis="both", labelsize=13.5)
     # Scaling bubble size
-    bubble_sizes = df["size_mb"] * 14 + 120
+    bubble_sizes = df["size_mb"] * 16 + 150
     scatter = ax_c.scatter(
         df["lat_ms"],
         df["dsc"],
@@ -106,50 +113,67 @@ def generate_model_size_latency_comparison():
         zorder=3
     )
 
-    # Annotate models
+    # Distinct non-overlapping label offsets
+    offsets = {
+        "Our ResNet-34 U-Net (FP32)": (14, 30),
+        "Our ResNet-34 U-Net (Static INT8)": (14, -36),
+        "Our MobileNetV3-Small (FP32)": (-10, 24),
+        "Our MobileNetV3 v2 (Rescued Mixed k=13)": (14, -36),
+        "Our MobileNetV3 v1 (Naive INT8 / Harsh)": (14, -18),
+        "Shifaa U-Net (Online Pretrained)": (14, 12),
+        "Attention U-Net": (14, -24),
+        "U-Net++ (Nested Skips)": (-110, 24),
+    }
+
+    # Annotate models with concise readable labels
     for _, row in df.iterrows():
-        offset_y = 0.015 if "r34" not in row["name"] or "INT8" in row["name"] else -0.025
-        offset_x = 3 if row["lat_ms"] < 120 else -15
-        if "v1" in row["name"]:
-            offset_y = -0.035
-            offset_x = -15
-        elif "v2" in row["name"]:
-            offset_y = 0.020
-            offset_x = -10
+        off = offsets.get(row["name"], (12, 8))
+        label_text = (
+            row["name"]
+            .replace("Our ", "")
+            .replace(" U-Net", "")
+            .replace(" (Nested Skips)", "")
+            .replace(" (Online Pretrained)", "")
+            .replace(" (Naive INT8 / Harsh)", " (Naive INT8)")
+            .replace(" (Rescued Mixed k=13)", " (Rescued k=13)")
+        )
         ax_c.annotate(
-            f"{row['name']}\n(Dice: {row['dsc']:.3f})",
+            f"{label_text}\n(Dice: {row['dsc']:.3f})",
             xy=(row["lat_ms"], row["dsc"]),
-            xytext=(row["lat_ms"] + offset_x, row["dsc"] + offset_y),
-            fontsize=8.5,
+            xytext=off,
+            textcoords="offset points",
+            fontsize=12,
             fontweight="semibold",
-            bbox=dict(boxstyle="round,pad=0.2", facecolor="white", alpha=0.75, edgecolor="gray", linewidth=0.5),
+            bbox=dict(boxstyle="round,pad=0.25", facecolor="white", alpha=0.85, edgecolor="gray", linewidth=0.6),
             zorder=4
         )
 
-    # Pareto line
-    pareto_points = sorted([
-        (16.85, 0.7655),  # mbv3s FP32
-        (24.48, 0.7345),  # mbv3s v2
-        (54.27, 0.7728),  # r34 FP32
-        (56.82, 0.7715),  # r34 INT8
-    ], key=lambda x: x[0])
-    px = [p[0] for p in pareto_points]
-    py = [p[1] for p in pareto_points]
-    ax_c.plot(px, py, color="black", linestyle="-.", linewidth=1.5, label="Empirical Pareto Frontier", zorder=2)
+    # Dynamic Pareto skyline frontier
+    pareto_candidates = sorted(list(zip(df["lat_ms"], df["dsc"])), key=lambda x: x[0])
+    skyline = []
+    max_d = -1.0
+    for lat, dsc in pareto_candidates:
+        if dsc > max_d:
+            skyline.append((lat, dsc))
+            max_d = dsc
+    px = [p[0] for p in skyline]
+    py = [p[1] for p in skyline]
+    ax_c.plot(px, py, color="black", linestyle="-.", linewidth=2.0, label="Empirical Pareto Frontier", zorder=2)
 
-    ax_c.axhline(0.70, color="crimson", linestyle="--", linewidth=1.2, label="Clinical Usability Threshold (Dice = 0.70)")
-    ax_c.axvline(33.33, color="green", linestyle="--", linewidth=1.2, label="30 FPS Streaming Threshold")
-    ax_c.set_xlabel("Edge CPU Inference Latency (ms)", fontsize=11, fontweight="bold")
-    ax_c.set_ylabel("Held-Out Test Dice Score (DSC)", fontsize=11, fontweight="bold")
-    ax_c.set_title("C: Pareto Frontier: Accuracy vs. Edge Latency (Bubble = Size)", fontsize=12.5, fontweight="bold", pad=10)
-    ax_c.set_ylim(0.20, 0.85)
-    ax_c.set_xlim(0, 215)
-    ax_c.legend(loc="lower left", fontsize=9.2, frameon=True)
+    ax_c.axhline(0.70, color="crimson", linestyle="--", linewidth=1.5, label="Clinical Usability Threshold (Dice = 0.70)")
+    ax_c.axvline(33.33, color="green", linestyle="--", linewidth=1.5, label="30 FPS Streaming Threshold")
+    ax_c.set_xlabel("Edge CPU Inference Latency (ms)", fontsize=16.5, fontweight="bold")
+    ax_c.set_ylabel("Held-Out Test Dice Score (DSC)", fontsize=16.5, fontweight="bold")
+    ax_c.set_title("Pareto Frontier: Accuracy vs. Edge Latency (Bubble = Size)", fontsize=18.5, fontweight="bold", pad=12)
+    ax_c.set_ylim(0.18, 0.90)
+    ax_c.set_xlim(0, 290)
+    ax_c.legend(loc="lower right", fontsize=13.5, frameon=True)
 
     # -------------------------------------------------------------
     # Subplot D: Specificity & Safety: Normal Tissue False Positive Rate
     # -------------------------------------------------------------
     ax_d = axes[1, 1]
+    ax_d.tick_params(axis="both", labelsize=13.5)
     fpr_data = []
     audit_csv = Path("results/accuracy_audit_test.csv")
     if audit_csv.exists():
@@ -185,18 +209,18 @@ def generate_model_size_latency_comparison():
         ]
     df_fpr = pd.DataFrame(fpr_data).sort_values(by="fpr", ascending=True)
     bars_d = ax_d.barh(df_fpr["name"], df_fpr["fpr"], color=df_fpr["color"], height=0.55)
-    ax_d.set_xlabel("Normal Tissue False Positive Rate (% FPR@50px)", fontsize=11, fontweight="bold")
-    ax_d.set_title("D: Clinical Safety Audit: False Positive Hallucinations", fontsize=12.5, fontweight="bold", pad=10)
+    ax_d.set_xlabel("Normal Tissue False Positive Rate (% FPR@50px)", fontsize=16.5, fontweight="bold")
+    ax_d.set_title("Clinical Safety Audit: False Positive Hallucinations", fontsize=18.5, fontweight="bold", pad=12)
     for bar in bars_d:
         val = bar.get_width()
         txt = f" {val:.2f}%"
-        ax_d.text(val + 0.8, bar.get_y() + bar.get_height() / 2, txt, va="center", fontsize=9.5, fontweight="semibold")
-    ax_d.set_xlim(0, 115)
+        ax_d.text(val + 1.0, bar.get_y() + bar.get_height() / 2, txt, va="center", fontsize=14, fontweight="semibold")
+    ax_d.set_xlim(0, 118)
 
     plt.suptitle(
         "Quantitative System Trade-offs: Model Footprint, Latency, Pareto Frontier & Clinical Safety\n"
         "(Benchmarked on Edge CPU: MobileNetV3 v1 Naive Collapse vs. MobileNetV3 v2 Rescued vs. ResNet-34 Lossless INT8)",
-        fontsize=14.5,
+        fontsize=21,
         fontweight="bold",
         y=0.99
     )

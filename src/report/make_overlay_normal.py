@@ -64,17 +64,17 @@ def generate_normal_cases_overlay_plot():
         "Raw B-Mode Scan\n(Healthy Tissue)",
         "Ground Truth\n(Normal / Empty)",
         "Shifaa U-Net\n(Online HF)",
-        "Our ResNet-34\n(FP32 Baseline)",
-        "Our ResNet-34\n(Static INT8 QDQ)",
-        "Our MobileNetV3\n(FP32 Baseline)",
-        "Our MobileNetV3 v1\n(Naive INT8 - False Alarms)",
-        "Our MobileNetV3 v2\n(Rescued Mixed)",
+        "Our ResNet-34\n(FP32)",
+        "Our ResNet-34\n(INT8 QDQ)",
+        "Our MobileNetV3\n(FP32)",
+        "MobileNetV3 v1\n(Naive INT8)",
+        "MobileNetV3 v2\n(Rescued Mixed)",
     ]
 
     n_rows = len(selected_ids)
     n_cols = len(cols)
 
-    fig, axes = plt.subplots(n_rows, n_cols, figsize=(20, 10.5), gridspec_kw={"wspace": 0.04, "hspace": 0.12})
+    fig, axes = plt.subplots(n_rows, n_cols, figsize=(26, 14), gridspec_kw={"wspace": 0.08, "hspace": 0.22})
 
     for row_idx, case_id in enumerate(selected_ids):
         img_p = Path(f"data/processed/images/{case_id}.png")
@@ -137,7 +137,7 @@ def generate_normal_cases_overlay_plot():
             if fp_count <= 50:
                 return f"FP: {fp_count} px (Clean ✓)", "green"
             else:
-                return f"FP: {fp_count:,} px (False Alarm ⚠)", "red"
+                return f"FP: {fp_count:,} px (Alarm ⚠)", "red"
 
         panels = [
             (panel_0, None, "black"),
@@ -159,18 +159,18 @@ def generate_normal_cases_overlay_plot():
             ax.set_yticks([])
 
             if row_idx == 0:
-                ax.set_title(cols[col_idx], fontsize=10, fontweight="bold", pad=8)
+                ax.set_title(cols[col_idx], fontsize=14, fontweight="bold", pad=10)
 
             if fp_lbl is not None:
-                ax.set_xlabel(fp_lbl, fontsize=9.0, fontweight="semibold", color=lbl_color, labelpad=4)
+                ax.set_xlabel(fp_lbl, fontsize=12.5, fontweight="semibold", color=lbl_color, labelpad=6)
 
             if col_idx == 0:
-                ax.set_ylabel(case_title, fontsize=10, fontweight="bold", labelpad=6)
+                ax.set_ylabel(case_title, fontsize=15, fontweight="bold", labelpad=8)
 
     plt.suptitle(
         "Normal Tissue (Healthy Breast) Evaluation: False Positive & Specificity Audit\n"
-        "(Healthy tissue without lesions: Illustrating False Alarms in MobileNetV3 v1 vs. Zero False Positives in v2 and ResNet-34 INT8)",
-        fontsize=13.5,
+        "(Healthy tissue without lesions: Specificity and False Alarm Audit across FP32, INT8 & Rescued Models)",
+        fontsize=20,
         fontweight="bold",
         y=0.99,
     )
